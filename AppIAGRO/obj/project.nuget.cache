@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "q3B6Blcg8+C2K/K1MP834YrCHmj6aGg01ttTZEwLLvFDfP5RjrO4Tmv2kyfOvhiN+nRiJSX9TlIlfT8XlBUgbA==",
+  "success": true,
+  "projectFilePath": "C:\\Pasta Cleiton\\www\\TesteIAGRO\\Aplicação\\AppIAGRO\\AppIAGRO\\AppIAGRO.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\djcle\\.nuget\\packages\\knockoutjs\\3.5.1\\knockoutjs.3.5.1.nupkg.sha512"
+  ],
+  "logs": []
+}
