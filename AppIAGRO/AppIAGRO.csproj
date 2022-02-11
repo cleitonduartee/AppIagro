@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\app\propriedade\app.propriedade.viewModel.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\app\produtor\app.produtor.viewModel.js" />
+    <None Include="wwwroot\app\propriedade\app.propriedade.viewModel.js" />
     <None Include="wwwroot\lib\knockout-3.5.1.js" />
   </ItemGroup>
 

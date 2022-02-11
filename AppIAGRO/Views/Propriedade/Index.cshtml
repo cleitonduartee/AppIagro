@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Propriedade";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+<div class="container">
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Inscricao Estadual</th>
+                <th scope="col">Nome da Propriedade</th>
+                <th scope="col">Produtor</th>
+                <th scope="col">Municipio da Propriedade</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: propriedades">
+            <tr>
+                <td data-bind="text: InscricaoEstadual "></td>
+                <td data-bind="text: NomePropriedade"></td>
+                <td data-bind="text: NomeProdutor"></td>
+                <td data-bind="text: MunicipioPropriedade"></td>
+                <td><button data-bind="click: $parent.preparaEdicao" type="button" class="btn btn-warning" data-toggle="modal" data-target="#dialogPropriedade">Editar</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal-footer row justify-content-center">
+        <button data-bind="click: preparaNovoCadastro" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#dialogPropriedade">Cadastrar</button>
+    </div>
+
+    @*<button data-bind="click: BuscarProdutores">Buscar</button>*@
+
+    <div class="modal fade" id="dialogPropriedade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nomeDialog" data-bind="if: isEditing ">Editar Propriedade</h5>
+                    <h5 class="modal-title" id="nomeDialog" data-bind="ifnot: isEditing ">Novo Propriedade</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <div class="form-group col-sm-6">
+                                <label for="nome" class="col-form-label">Inscricao estadual:</label>
+                                <input disabled type="text" class="form-control" id="nome" data-bind="visible: isEditing, value: InscricaoEstadual">
+                                <input disabled type="text" class="form-control" id="nome" data-bind="visible: !isEditing()" value="Será criado automaticamente.">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="cpf" class="col-form-label">Nome da propriedade:</label>
+                                <input class="form-control" id="cpf" data-bind="value: NomePropriedade"></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-sm-6">
+                                <select class="form-control form-control-sm" data-bind="options: produtores,
+                                                                                   optionsText: 'Nome',
+                                                                                   optionsValue: 'ProdutorId',
+                                                                                   optionsCaption: 'Selecione um produtor...',
+                                                                                   value: ProdutorId">
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <select class="form-control form-control-sm" data-bind="options: municipios,
+                                                                                   optionsText: 'Nome',
+                                                                                   optionsValue: 'MunicipioId',
+                                                                                   optionsCaption: 'Selecione um municipio...',
+                                                                                   value: MunicipioId">
+                                </select>
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" id="btnDialog" data-bind="visible: isEditing, click: atualizar ">Atualizar</button>
+                    <button type="button" class="btn btn-primary" id="btnDialog" data-bind="visible: !isEditing(), click: inserirNovo ">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+<script src="~/app/produtor/app.produtor.model.js"></script>
+<script src="~/app/propriedade/app.propriedade.model.js"></script>
+<script src="~/app/propriedade/app.propriedade.viewModel.js"></script>
+
+}
