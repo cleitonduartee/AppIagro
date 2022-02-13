@@ -7,12 +7,16 @@
   <ItemGroup>
     <Content Remove="wwwroot\app\animais\app.animais.viewModel.js" />
     <Content Remove="wwwroot\app\propriedade\app.propriedade.viewModel.js" />
+    <Content Remove="wwwroot\app\registroVacina\app.registroVacina.services.js" />
+    <Content Remove="wwwroot\app\registroVacina\app.registroVacina.viewModel.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\app\animais\app.animais.viewModel.js" />
     <None Include="wwwroot\app\produtor\app.produtor.viewModel.js" />
     <None Include="wwwroot\app\propriedade\app.propriedade.viewModel.js" />
+    <None Include="wwwroot\app\registroVacina\app.registroVacina.services.js" />
+    <None Include="wwwroot\app\registroVacina\app.registroVacina.viewModel.js" />
     <None Include="wwwroot\lib\knockout-3.5.1.js" />
   </ItemGroup>
 

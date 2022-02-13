@@ -1,0 +1,190 @@
+﻿@{
+    ViewData["Title"] = "Registro Vacina";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<br />
+<br />
+<div class="container">
+
+    <div class="form-group row">
+
+        <div class="form-group col-sm-6">
+
+            <fieldset class="form-group p-3">
+                <legend class="w-auto px-2">Realizar Registro de Vacinacao</legend>
+                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#dialogRegistroVacina">Registrar</button>
+            </fieldset>
+        </div>
+        <div class="form-group col-sm-6">
+            <fieldset class="form-group p-3">
+                <legend class="w-auto px-2">Cancelar Registro de Vacinacao</legend>
+                <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#dialogCancelarRegistro">Cancelar</button>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dialogRegistroVacina" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nomeDialog">Registro de Vacinação</h5>
+                    <button type="button" class="close" data-bind="click: ResetVariaveis" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <div class="form-group col-sm-6">
+                                <label for="cpf" class="col-form-label">Propriedade</label>
+                                <select class="form-control " data-bind="options: propriedades,
+                                                                        optionsText: 'NomePropriedade',
+                                                                        optionsValue: 'NomePropriedade',
+                                                                        optionsCaption: 'Selecione uma propriedade...',
+                                                                        value: NomePropriedade">
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="date" class="col-form-label">Data da Vacinacao</label>
+                                <input class="form-control " id="date" type="date" data-bind="value: DataVacinacao" />
+                            </div>
+
+                            <fieldset class="form-group col-sm-12">
+                                <table class="table table-bordered table-info">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" class="text-center">Saldo sem vacina</th>
+                                            <th colspan="2" class="text-center">Informe quantidade de animais vacinados</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">Bovino</th>
+                                            <th scope="col">Bubalino</th>
+                                            <th scope="col">Bovino</th>
+                                            <th scope="col">Bubalino</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: animaisPorPropriedade">
+                                        <tr>
+                                            <td data-bind="text: SaldoSemVacinaBovino">10</td>
+                                            <td data-bind="text: SaldoSemVacinaBubalino">20</td>
+                                            <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBovinoVacinado" /></td>
+                                            <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBubalinoVacinado" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </fieldset>
+
+                            <br />
+                            <br />
+
+                            <div class="container">
+                                <fieldset class="form-group border col-sm-12">
+                                <legend class="w-auto px-2"> Tipo de Vacina</legend>
+                                
+                                <div class="form-check d-flex justify-content-around">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value=0 data-bind="checked: TipoVacina" name="flexRadioDefault" id="AFTOSA">
+                                        <label class="form-check-label" for="AFTOSA">
+                                           AFTOSA
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"  value=1 data-bind="checked: TipoVacina" name="flexRadioDefault" id=" BRUCELOSE_B19" checked>
+                                        <label class="form-check-label" for=" BRUCELOSE_B19">
+                                             BRUCELOSE_B19
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"  value=2 data-bind="checked: TipoVacina" name="flexRadioDefault" id="BRUCELOSE_RB51" checked>
+                                        <label class="form-check-label" for="BRUCELOSE_RB51">
+                                            BRUCELOSE_RB51
+                                        </label>
+                                    </div>
+                                </div>
+                                <br />
+
+                            </fieldset>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bind="click: ResetVariaveis" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" id="btnDialog" data-bind="click: RealizaRegistroVacinacao">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <div class="modal fade" id="dialogCancelarRegistro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nomeDialog">Cancelar Registros de Vacinação</h5>
+                    <button type="button" data-bind="click: ResetVariaveis" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <div class="form-group col-sm-6">
+                                <label for="cpf" class="col-form-label">Propriedade</label>
+                                <select class="form-control " data-bind="options: propriedades,
+                                                                        optionsText: 'NomePropriedade',
+                                                                        optionsValue: 'PropriedadeId',
+                                                                        optionsCaption: 'Selecione uma propriedade...',
+                                                                        value:  PropriedadeId">
+                                </select>
+                            </div>
+                            <div  class="table table-sm">
+                                <table class="table table-bordered">
+                                    <thead >
+                                        <tr>
+                                            <th class=".text-truncate" scope="col">Codigo Historico</th>
+                                            <th >Tipo Vacina</th>
+                                            <th >Quantidade Bovino</th>
+                                            <th >Quantidade Bubalino</th>
+                                            <th >Data Vacinação</th>                                            
+                                            <th ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: registrosDeVacinas">
+                                        <tr>
+                                            <td data-bind="text: CodigoRegistro"></td>
+                                            <td data-bind="text: TipoVacina"></td>
+                                            <td data-bind="text: QtdBovinoVacinado"></td>
+                                            <td data-bind="text: QtdBubalinoVacinado"></td>
+                                            <td data-bind="text: DataVacinacao"></td>
+                                            <td><button data-bind="click: $parent.RealizaCancelamento " type="button" class="btn btn-warning" >Cancelar</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>               
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+@section Scripts{
+<script src="~/app/propriedade/app.propriedade.model.js"></script>
+<script src="~/app/animais/app.animais.model.js"></script>
+<script src="~/app/registroVacina/app.registroVacina.model.js"></script>
+<script src="~/app/registroVacina/app.registroVacina.services.js"></script>
+<script src="~/app/registroVacina/app.registroVacina.viewModel.js"></script>
+
+}
