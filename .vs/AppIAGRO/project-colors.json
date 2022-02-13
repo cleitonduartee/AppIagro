@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "0cca9088-a5fd-432b-bf3e-d4a50c19bee2": {
+      "ProjectGuid": "0cca9088-a5fd-432b-bf3e-d4a50c19bee2",
+      "DisplayName": "AppIAGRO",
+      "ColorIndex": 0
+    },
+    "919fd655-f067-4ba2-b932-d926e85dd6b4": {
+      "ProjectGuid": "919fd655-f067-4ba2-b932-d926e85dd6b4",
+      "DisplayName": "Documentos de Script",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

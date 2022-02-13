@@ -13,7 +13,7 @@ app.produtor.model = function () {
         self.Numero = ko.observable(produtor.endereco.numero);
         self.Municipio = ko.observable(produtor.endereco.municipio);
         self.EnderecoCompleto = ko.computed(function () {            
-            return "Rua : " + self.NomeRua() + ", n° " + self.Numero() + ", municipio: " + self.Municipio().nome;
+            return "Rua : " + self.NomeRua() + ", n° " + self.Numero() + ", " + self.Municipio().nome + "-MS.";
         });
     }
     var edicaoProdutor = function (produtor) {

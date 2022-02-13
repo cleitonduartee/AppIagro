@@ -1,0 +1,205 @@
+﻿@{
+    ViewData["Title"] = "Animais";
+}
+<div class="d-flex justify-content-between">
+    <h1>@ViewData["Title"]</h1>
+    <div class="d-flex align-items-end flex-column">
+        <div class="p-2">
+            <span>Realizar entrada de animais</span>
+            <button type="button" class="btn btn-outline-info" data-bind="click: preparaEntradaAnimais" data-toggle="modal" data-target="#dialogEntraAnimais">Entrada</button>
+        </div>
+        <div class="p-2">
+            <span>Cancelar entrada de animais</span>
+            <button type="button" class="btn btn-outline-warning" data-bind="click: preparaEntradaAnimais" data-toggle="modal" data-target="#dialogCancelarEntraAnimais">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+
+    <fieldset class="form-group border p-3">
+        <legend class="w-auto px-2">Buscar Animais</legend>
+
+        <div class="form-group row">
+            <div class="form-group col-sm-6">
+                <fieldset class="form-group border p-3">
+                    <legend class="w-auto px-2"> Buscar por produtor</legend>
+                    <select class="form-control form-control-sm" data-bind="options: produtores,
+                                                                        optionsText: 'Nome',
+                                                                        optionsValue: 'Nome',
+                                                                        optionsCaption: 'Selecione um produtor...',
+                                                                        value: NomeProdutor">
+                    </select>
+                    <br />
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="1" class="text-center"></th>
+                                <th colspan="2" class="text-center">Com Vacina</th>
+                                <th colspan="2" class="text-center">Sem Vacina</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Propriedade</th>
+                                <th scope="col">Bovino</th>
+                                <th scope="col">Bubalino</th>
+                                <th scope="col">Bovino</th>
+                                <th scope="col">Bubalino</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: animaisPorProdutor">
+                            <tr>
+                                <td data-bind="text: NomePropriedade"></td>
+                                <td data-bind="text: SaldoComVacinaBovino"></td>
+                                <td data-bind="text: SaldoComVacinaBubalino"></td>
+                                <td data-bind="text: SaldoSemVacinaBovino"></td>
+                                <td data-bind="text: SaldoSemVacinaBubalino"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+            </div>
+            <div class="form-group col-sm-6">
+                <fieldset class="form-group border p-3">
+                    <legend class="w-auto px-2"> Buscar por propriedade</legend>
+                    <select class="form-control form-control-sm" data-bind="options: propriedades,
+                                                                        optionsText: 'NomePropriedade',
+                                                                        optionsValue: 'NomePropriedade',
+                                                                        optionsCaption: 'Selecione um propriedade...',
+                                                                        value: NomePropriedade">
+                    </select>
+                    <br />
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="1" class="text-center"></th>
+                                <th colspan="2" class="text-center">Com Vacina</th>
+                                <th colspan="2" class="text-center">Sem Vacina</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Produtor</th>
+                                <th scope="col">Bovino</th>
+                                <th scope="col">Bubalino</th>
+                                <th scope="col">Bovino</th>
+                                <th scope="col">Bubalino</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: animaisPorPropriedade">
+                            <tr>
+                                <td data-bind="text: NomeProdutor"></td>
+                                <td data-bind="text: SaldoComVacinaBovino"></td>
+                                <td data-bind="text: SaldoComVacinaBubalino"></td>
+                                <td data-bind="text: SaldoSemVacinaBovino"></td>
+                                <td data-bind="text: SaldoSemVacinaBubalino"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+
+        </div>
+    </fieldset>
+
+    <div class="modal fade" id="dialogEntraAnimais" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nomeDialog">Entrada de Animais</h5>
+                    <button type="button" class="close" data-bind="click: ResetVariaveis" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <div class="form-group col-sm-6">
+                                <label for="cpf" class="col-form-label">Propriedade</label>
+                                <select class="form-control " data-bind="options: propriedadesCopyParaEntradaAnimais,
+                                                                        optionsText: 'NomePropriedade',
+                                                                        optionsValue: 'PropriedadeId',
+                                                                        optionsCaption: 'Selecione uma propriedade...',
+                                                                        value: PropriedadeId">
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="cpf" class="col-form-label">Quantidade Bovino</label>
+                                <input class="form-control" id="cpf" type="number" min="0" data-bind="value: QtdBovino"></input>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="cpf" class="col-form-label">Quantidade Bubalino</label>
+                                <input class="form-control" id="cpf" type="number" min="0" data-bind="value: QtdBubalino"></input>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bind="click: ResetVariaveis" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" id="btnDialog" data-bind="click: RealizaEntradaAnimais">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dialogCancelarEntraAnimais" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nomeDialog">Cancelar Entrada de Animais</h5>
+                    <button type="button" data-bind="click: ResetVariaveis" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <div class="form-group col-sm-6">
+                                <label for="cpf" class="col-form-label">Propriedade</label>
+                                <select class="form-control " data-bind="options: propriedadesCopyParaEntradaAnimais,
+                                                                        optionsText: 'NomePropriedade',
+                                                                        optionsValue: 'PropriedadeId',
+                                                                        optionsCaption: 'Selecione uma propriedade...',
+                                                                        value: PropriedadeId">
+                                </select>
+                            </div>
+                            <div  class="table table-sm">
+                                <table class="table table-bordered">
+                                    <thead >
+                                        <tr>
+                                            <th class=".text-truncate" scope="col">Codigo Historico</th>
+                                            <th >Quantidade Bovino</th>
+                                            <th >Quantidade Bubalino</th>
+                                            <th >Data Entrada</th>
+                                            <th >Situação</th>
+                                            <th ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: HistoricoEntradas">
+                                        <tr>
+                                            <td data-bind="text: CodigoHistorico "></td>
+                                            <td data-bind="text: QtdBovino"></td>
+                                            <td data-bind="text: QtdBubalino"></td>
+                                            <td data-bind="text: DataMovimentacao"></td>
+                                            <td data-bind="text: Status"></td>
+                                            <td><button data-bind="click: $parent.RealizaCancelamento " type="button" class="btn btn-warning" >Cancelar</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+<script src="~/app/produtor/app.produtor.model.js"></script>
+<script src="~/app/propriedade/app.propriedade.model.js"></script>
+<script src="~/app/animais/app.animais.model.js"></script>
+<script src="~/app/historico/app.historico.model.js"></script>
+<script src="~/app/animais/app.animais.viewModel.js"></script>
+}

@@ -38,3 +38,4 @@ C:\Pasta Cleiton\www\TesteIAGRO\Aplicação\AppIAGRO\AppIAGRO\obj\Debug\net5.0\A
 C:\Pasta Cleiton\www\TesteIAGRO\Aplicação\AppIAGRO\AppIAGRO\obj\Debug\net5.0\AppIAGRO.genruntimeconfig.cache
 C:\Pasta Cleiton\www\TesteIAGRO\Aplicação\AppIAGRO\AppIAGRO\obj\Debug\net5.0\AppIAGRO.csproj.CopyComplete
 C:\Pasta Cleiton\www\TesteIAGRO\Aplicação\AppIAGRO\AppIAGRO\obj\Debug\net5.0\Razor\Views\Propriedade\Index.cshtml.g.cs
+C:\Pasta Cleiton\www\TesteIAGRO\Aplicação\AppIAGRO\AppIAGRO\obj\Debug\net5.0\Razor\Views\Animais\Index.cshtml.g.cs
