@@ -1,5 +1,179 @@
 ﻿@{
     ViewData["Title"] = "Vendas";
 }
+<div class="d-flex justify-content-between">
+    <h1>@ViewData["Title"]</h1>
+    <div class="d-flex align-items-end flex-column">
+        <div class="p-2">
+            <span>Buscar compras por propdutor</span>
+            <button type="button" data-bind="click: preparaBuscaCompras" class="btn btn-outline-info" data-toggle="modal" data-target="#dialogComprasEVendas">Buscar</button>
+        </div>
+        <div class="p-2">
+            <span>Buscar vendas por propdutor</span>
+            <button type="button" data-bind="click: preparaBuscaVendas" class="btn btn-outline-info" data-toggle="modal" data-target="#dialogComprasEVendas">Buscar</button>
+        </div>
+        <div class="p-2">
+            <span>Cancelar venda</span>
+            <button type="button" class="btn btn-outline-warning">Cancelar</button>
+        </div>
+    </div>
+</div>
 
-<h1>@ViewData["Title"]</h1>
+<div class="container">
+
+    <fieldset class="form-group border p-3">
+        <legend class="w-auto px-2"> Realizar Venda</legend>
+        <div class="form-group row">
+            <div class="form-group col-sm-6">
+                <span>Propriedade de origem</span>
+                <select class="form-control form-control-sm" data-bind="options: propriedadesOrigem,
+                                                                        optionsText: 'NomePropriedade',
+                                                                        optionsValue: 'NomePropriedade',
+                                                                        optionsCaption: 'Selecione uma propriedade...',
+                                                                        value: nomePropriedadeOrigem">
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <span>Propriedade de destino</span>
+                <select class="form-control form-control-sm" data-bind="options: propriedadesDestino,
+                                                                        optionsText: 'NomePropriedade',
+                                                                        optionsValue: 'PropriedadeId',
+                                                                        optionsCaption: 'Selecione uma propriedade...',
+                                                                        value: propriedadeIdDestino">
+                </select>
+            </div>
+        </div>
+        <br />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2" class="text-center bg-info">Saldo disponível para venda</th>
+                    <th colspan="2" class="text-center bg-info">Informe a quantidade de animais para o venda</th>
+                </tr>
+                <tr>
+                    <th scope="col">Bovino</th>
+                    <th scope="col">Bubalino</th>
+                    <th scope="col">Bovino</th>
+                    <th scope="col">Bubalino</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: animaisPropriedadeOrigem">
+                <tr >                    
+                    <td data-bind="text: SaldoComVacinaBovino"></td>
+                    <td data-bind="text: SaldoComVacinaBubalino"></td>
+                    <td><input data-bind="value: $parent.qtdBovinoVenda, disable: SaldoComVacinaBovino() == 0, attr: { max: SaldoComVacinaBovino }" class="form-control" type="number" min="0" /></td>
+                    <td><input data-bind="value: $parent.qtdBubalinoVenda, disable: SaldoComVacinaBubalino() == 0 , attr: { max: SaldoComVacinaBubalino }" class="form-control" type="number" min="0" /></td>
+                </tr>
+                <tr data-bind="visible: !$parent.existeSaldoParaVenda()">
+                    <th colspan="4" class="text-center text-danger ">Propriedade não possui saldo para venda.</th>
+                </tr>
+            </tbody>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div class="container">
+            <fieldset class="form-group border col-sm-12">
+                <legend class="w-auto px-2"> Finalidade</legend>
+
+                <div class="form-check d-flex justify-content-around">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value=0 data-bind="checked: finalidade" name="flexRadioDefault" id="AFTOSA">
+                        <label class="form-check-label" for="AFTOSA">
+                            REPRODUÇÃO
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value=1 data-bind="checked: finalidade" name="flexRadioDefault" id=" BRUCELOSE_B19" checked>
+                        <label class="form-check-label" for=" BRUCELOSE_B19">
+                            ENGORDA
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value=2 data-bind="checked: finalidade" name="flexRadioDefault" id="BRUCELOSE_RB51" checked>
+                        <label class="form-check-label" for="BRUCELOSE_RB51">
+                            TRABALHO
+                        </label>
+                    </div>
+                </div>
+                <br />
+            </fieldset>
+            <div class="d-flex justify-content-center">
+                <div class="form-group  mt-3">
+                    <button type="button" class="btn btn-warning btn-lg" data-bind="click: reset">Cancelar</button>
+                    <button type="button" class="btn btn-success btn-lg" data-bind="disable: !existeSaldoParaVenda(), click: realizarVenda">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="modal fade" id="dialogComprasEVendas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nomeDialog" data-bind="text: tituloDialogCompraVendas"></h5>
+                    <button type="button" data-bind="click: reset" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <div class="form-group col-sm-4">
+                                <label for="cpf" class="col-form-label">Propriedade</label>
+                                <select class="form-control " data-bind="options: produtores,
+                                                                        optionsText: 'Nome',
+                                                                        optionsValue: 'ProdutorId',
+                                                                        optionsCaption: 'Selecione uma produtor...',
+                                                                        value:  produtorIdBuscaComprasEVendas">
+                                </select>
+                            </div>
+                            <div class="container">
+                                <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">Codigo Historico</th>
+                                            <th scope="col">Propriedade Origem</th>
+                                            <th scope="col">Propriedade Destino</th>
+                                            <th scope="col">Quantidade Bovino</th>
+                                            <th scope="col">Quantidade Bubalino</th>
+                                            <th scope="col">Data Movimentacao</th>
+                                            <th scope="col">Data Cancelamento</th>
+                                            <th scope="col">Finalidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: historicosComprasEVendas">                                   
+                                        <tr class="text-center" scope="row">
+                                            <td data-bind="text: codigoHistorico"></td>
+                                            <td data-bind="text: propriedadeOrigemId"></td>
+                                            <td data-bind="text: propriedadeDestinoId"></td>
+                                            <td data-bind="text: qtdComVacinaBovino"></td>
+                                            <td data-bind="text: qtdComVacinaBubalino"></td>
+                                            <td data-bind="text: dataMovimentacao"></td>
+                                            <td data-bind="text: dataCancelamento"></td>
+                                            <td data-bind="text: finalidade"></td>                                           
+                                        </tr>   
+                                    </tbody>
+                                    <tbody data-bind="visible: !$root.existeMovimentacoes()">
+                                         <tr >
+                                            <th colspan="8" class="text-center text-danger" data-bind="text: $root.msgQuandoNaoExisteMovimentacao"></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script src="~/app/produtor/app.produtor.model.js"></script>
+<script src="~/app/propriedade/app.propriedade.model.js"></script>
+<script src="~/app/vendas/app.vendas.model.js"></script>
+<script src="~/app/animais/app.animais.model.js"></script>
+<script src="~/app/vendas/app.vendas.services.js"></script>
+<script src="~/app/vendas/app.vendas.viewModel.js"></script>
+
+}

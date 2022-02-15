@@ -162,20 +162,20 @@
                                                                         value: PropriedadeId">
                                 </select>
                             </div>
-                            <div  class="table table-sm">
+                            <div  class="container">
                                 <table class="table table-bordered">
                                     <thead >
-                                        <tr>
-                                            <th class=".text-truncate" scope="col">Codigo Historico</th>
-                                            <th >Quantidade Bovino</th>
-                                            <th >Quantidade Bubalino</th>
-                                            <th >Data Entrada</th>
-                                            <th >Situação</th>
-                                            <th ></th>
+                                        <tr class="text-center">
+                                            <th class="text-truncate col-xs-2 col-sm-2" scope="col">Codigo Historico</th>
+                                            <th class="col-xs-1 col-sm-1">Bovino</th>
+                                            <th class="col-xs-1 col-sm-1">Bubalino</th>
+                                            <th class="col-xs-2 col-sm-2">Data Entrada</th>
+                                            <th class="col-xs-2 col-sm-2">Situação</th>
+                                            <th class="col-xs-2 col-sm-2"></th>
                                         </tr>
                                     </thead>
                                     <tbody data-bind="foreach: HistoricoEntradas">
-                                        <tr>
+                                        <tr class="text-center">
                                             <td data-bind="text: CodigoHistorico "></td>
                                             <td data-bind="text: QtdBovino"></td>
                                             <td data-bind="text: QtdBubalino"></td>

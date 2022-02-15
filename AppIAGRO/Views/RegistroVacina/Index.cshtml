@@ -81,31 +81,31 @@
 
                             <div class="container">
                                 <fieldset class="form-group border col-sm-12">
-                                <legend class="w-auto px-2"> Tipo de Vacina</legend>
-                                
-                                <div class="form-check d-flex justify-content-around">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" value=0 data-bind="checked: TipoVacina" name="flexRadioDefault" id="AFTOSA">
-                                        <label class="form-check-label" for="AFTOSA">
-                                           AFTOSA
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio"  value=1 data-bind="checked: TipoVacina" name="flexRadioDefault" id=" BRUCELOSE_B19" checked>
-                                        <label class="form-check-label" for=" BRUCELOSE_B19">
-                                             BRUCELOSE_B19
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio"  value=2 data-bind="checked: TipoVacina" name="flexRadioDefault" id="BRUCELOSE_RB51" checked>
-                                        <label class="form-check-label" for="BRUCELOSE_RB51">
-                                            BRUCELOSE_RB51
-                                        </label>
-                                    </div>
-                                </div>
-                                <br />
+                                    <legend class="w-auto px-2"> Tipo de Vacina</legend>
 
-                            </fieldset>
+                                    <div class="form-check d-flex justify-content-around">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value=0 data-bind="checked: TipoVacina" name="flexRadioDefault" id="AFTOSA">
+                                            <label class="form-check-label" for="AFTOSA">
+                                                AFTOSA
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value=1 data-bind="checked: TipoVacina" name="flexRadioDefault" id=" BRUCELOSE_B19" checked>
+                                            <label class="form-check-label" for=" BRUCELOSE_B19">
+                                                BRUCELOSE_B19
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value=2 data-bind="checked: TipoVacina" name="flexRadioDefault" id="BRUCELOSE_RB51" checked>
+                                            <label class="form-check-label" for="BRUCELOSE_RB51">
+                                                BRUCELOSE_RB51
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                </fieldset>
                             </div>
 
                         </div>
@@ -120,7 +120,7 @@
     </div>
 
 
-    
+
     <div class="modal fade" id="dialogCancelarRegistro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -142,41 +142,39 @@
                                                                         value:  PropriedadeId">
                                 </select>
                             </div>
-                            <div  class="table table-sm">
+                            <div class="container">
                                 <table class="table table-bordered">
-                                    <thead >
-                                        <tr>
-                                            <th class=".text-truncate" scope="col">Codigo Historico</th>
-                                            <th >Tipo Vacina</th>
-                                            <th >Quantidade Bovino</th>
-                                            <th >Quantidade Bubalino</th>
-                                            <th >Data Vacinação</th>                                            
-                                            <th ></th>
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th class="text-truncate col-xs-2 col-sm-2" scope="col">Codigo Historico</th>
+                                            <th class="col-xs-2 col-sm-2">Tipo Vacina</th>
+                                            <th class="col-xs-1 col-sm-1">Bovino</th>
+                                            <th class="col-xs-1 col-sm-1">Bubalino</th>
+                                            <th class="col-xs-2 col-sm-2">Data Vacinação</th>
+                                            <th class="col-xs-2 col-sm-2"></th>
                                         </tr>
                                     </thead>
                                     <tbody data-bind="foreach: registrosDeVacinas">
-                                        <tr>
+                                        <tr data-bind="visible: $parent.existeRegistrosDeVacina" class="text-center">
                                             <td data-bind="text: CodigoRegistro"></td>
                                             <td data-bind="text: TipoVacina"></td>
                                             <td data-bind="text: QtdBovinoVacinado"></td>
                                             <td data-bind="text: QtdBubalinoVacinado"></td>
                                             <td data-bind="text: DataVacinacao"></td>
-                                            <td><button data-bind="click: $parent.RealizaCancelamento " type="button" class="btn btn-warning" >Cancelar</button></td>
+                                            <td><button data-bind="click: $parent.RealizaCancelamento " type="button" class="btn btn-warning">Cancelar</button></td>
+                                        </tr>
+                                        <tr data-bind="visible: !$parent.existeRegistrosDeVacina()">
+                                            <th colspan="1" class="text-center text-danger ">Propriedade não possui saldo para venda.</th>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </form>
-                </div>               
+                </div>
             </div>
         </div>
     </div>
-
-
-
-
-
 </div>
 
 

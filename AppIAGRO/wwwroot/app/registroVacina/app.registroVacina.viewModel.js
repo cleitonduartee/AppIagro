@@ -56,6 +56,7 @@ app.registroVacina.viewModel = function () {
                     });
                 })
         }
+        
         self.RealizaCancelamento = function (event) {
             
             services.CancelarRegistro(event.CodigoRegistro())
@@ -63,9 +64,9 @@ app.registroVacina.viewModel = function () {
                     self.registrosDeVacinas.removeAll();
                     if (resp) {
                         alert("Registro cancelado com sucesso.");
-                        $('#dialogCancelarRegistro').modal('hide');
-                        self.ResetVariaveis();
+                        $('#dialogCancelarRegistro').modal('hide');                        
                     }
+                    self.ResetVariaveis();
                 });
         }
 
@@ -120,10 +121,9 @@ app.registroVacina.viewModel = function () {
                 .then(resp => {
                     if (resp) {
                         alert("Registro de vacinação realizada com sucesso.");
-                        $('#dialogRegistroVacina').modal('hide');
-                        self.ResetVariaveis();
+                        $('#dialogRegistroVacina').modal('hide');                        
                     }
-
+                    self.ResetVariaveis();
                 })
 
         }
@@ -168,10 +168,12 @@ app.registroVacina.viewModel = function () {
             return true;
 
         }
-       
-
-
-
+        self.existeRegistrosDeVacina = ko.computed(function () {
+            if (self.registrosDeVacinas().length > 0) 
+                return true;              
+            else 
+                return false;
+        });
 
     });
 

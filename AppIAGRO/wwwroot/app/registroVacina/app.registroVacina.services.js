@@ -10,12 +10,12 @@ app.registroVacina.services = function () {
 
     var BuscarPropriedadesNaApi = function () {
         return fetch('http://localhost:62978/api/v1/Propriedade/BuscarTodos')
-            .then(resp => {
+            .then(async resp => {
                 if (resp.ok) {
-                    return resp.json();
+                    return await resp.json();
                 }
                 else {
-                    throw new Error(resp.statusText);
+                    throw new Error(await resp.json());
                 }
 
             })
@@ -34,11 +34,11 @@ app.registroVacina.services = function () {
             body: JSON.stringify(body)
         }
         return fetch(url, options)
-            .then(resp => {
+            .then(async resp => {
                 if (resp.ok) {
                     return true;
                 } else {
-                    throw new Error(resp.statusText);
+                    throw new Error(await resp.json());
                 }
             })
             .catch(error => {
@@ -50,11 +50,11 @@ app.registroVacina.services = function () {
     var BuscarRegistrosDeVacinaNaApi = function (idPropriedade) {
         const url = ` http://localhost:62978/api/v1/RegistroVacina/BuscarRegistrosPorIdPropriedade/${idPropriedade} `;
         return fetch(url)
-            .then(resp => {
+            .then(async resp => {
                 if (resp.ok) {
-                    return resp.json();
+                    return await resp.json();
                 } else {
-                    throw new Error(resp.statusText);
+                    throw new Error(await resp.json());
                 }
             })
             .catch(error => {
@@ -63,7 +63,7 @@ app.registroVacina.services = function () {
 
     };
 
-    var CancelarRegistro = function (codigoregistro) {
+    var CancelarRegistro =  function  (codigoregistro) {
         const url = ` http://localhost:62978/api/v1/RegistroVacina/CancelarRegistroVacinacao/${codigoregistro} `;
         
         const options = {
@@ -72,12 +72,12 @@ app.registroVacina.services = function () {
             headers: header,
             body: {}
         }
-        return fetch(url, options)
-            .then(resp => {
+        return  fetch(url, options)
+            .then(async resp => {
                 if (resp.ok) {
                     return true;
                 } else {
-                    throw new Error(resp.statusText);
+                    throw new Error(await resp.json());
                 }
             })
             .catch(error => {
