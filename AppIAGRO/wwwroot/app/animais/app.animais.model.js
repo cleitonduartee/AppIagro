@@ -13,6 +13,12 @@ app.animais.model = function () {
         self.SaldoComVacinaBubalino = ko.observable(animal.saldoComVacinaBubalino);
         self.SaldoSemVacinaBovino = ko.observable(animal.saldoSemVacinaBovino);
         self.SaldoSemVacinaBubalino = ko.observable(animal.saldoSemVacinaBubalino);
+        self.TotalBovino = ko.computed(function () {
+            return self.SaldoComVacinaBovino() + self.SaldoSemVacinaBovino();
+        });
+        self.TotalBubalino = ko.computed(function () {
+            return self.SaldoComVacinaBubalino() + self.SaldoSemVacinaBubalino();
+        });
     }
    
 

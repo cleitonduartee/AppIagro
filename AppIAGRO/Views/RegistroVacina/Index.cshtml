@@ -69,10 +69,14 @@
                                         <tr>
                                             <td data-bind="text: SaldoSemVacinaBovino">10</td>
                                             <td data-bind="text: SaldoSemVacinaBubalino">20</td>
-                                            <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBovinoVacinado" /></td>
-                                            <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBubalinoVacinado" /></td>
+                                            <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBovinoVacinado, disable: SaldoSemVacinaBovino() == 0,  attr: { max: SaldoSemVacinaBovino }" /></td>
+                                            <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBubalinoVacinado, disable: SaldoSemVacinaBubalino() == 0,  attr: { max: SaldoSemVacinaBubalino }" /></td>
+                                        </tr>
+                                        <tr data-bind="visible: !$parent.existeSaldoSemVacina()">
+                                            <th colspan="4" class="text-center text-danger ">Propriedade não possui animais sem vacina.</th>
                                         </tr>
                                     </tbody>
+
                                 </table>
                             </fieldset>
 
@@ -113,7 +117,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bind="click: ResetVariaveis" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-info" id="btnDialog" data-bind="click: RealizaRegistroVacinacao">Confirmar</button>
+                    <button type="button" class="btn btn-info" id="btnDialog" data-bind="disable: !existeSaldoSemVacina(), click: RealizaRegistroVacinacao">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -143,15 +147,15 @@
                                 </select>
                             </div>
                             <div class="container">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered table-info">
                                     <thead>
                                         <tr class="text-center">
-                                            <th class="text-truncate col-xs-2 col-sm-2" scope="col">Codigo Historico</th>
-                                            <th class="col-xs-2 col-sm-2">Tipo Vacina</th>
-                                            <th class="col-xs-1 col-sm-1">Bovino</th>
-                                            <th class="col-xs-1 col-sm-1">Bubalino</th>
-                                            <th class="col-xs-2 col-sm-2">Data Vacinação</th>
-                                            <th class="col-xs-2 col-sm-2"></th>
+                                            <th scope="col">Codigo Historico</th>
+                                            <th scope="col">Tipo Vacina</th>
+                                            <th scope="col">Bovino</th>
+                                            <th scope="col">Bubalino</th>
+                                            <th scope="col">Data Vacinação</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody data-bind="foreach: registrosDeVacinas">

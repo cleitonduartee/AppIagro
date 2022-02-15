@@ -32,29 +32,39 @@
                                                                         value: NomeProdutor">
                     </select>
                     <br />
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-info">
                         <thead>
                             <tr>
-                                <th colspan="1" class="text-center"></th>
-                                <th colspan="2" class="text-center">Com Vacina</th>
-                                <th colspan="2" class="text-center">Sem Vacina</th>
+                                <th colspan="1" rowspan="2" class="align-middle">Propriedade</th>
+                                <th colspan="2" class="text-center">Bovino</th>
+                                <th colspan="2" class="text-center">Bubalino</th>
                             </tr>
                             <tr>
-                                <th scope="col">Propriedade</th>
-                                <th scope="col">Bovino</th>
-                                <th scope="col">Bubalino</th>
-                                <th scope="col">Bovino</th>
-                                <th scope="col">Bubalino</th>
+                                <th scope="col" class="text-center">Com Vacina</th>
+                                <th scope="col" class="text-center">Sem Vacina</th>
+                                <th scope="col" class="text-center">Com Vacina</th>
+                                <th scope="col" class="text-center">Sem Vacina</th>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: animaisPorProdutor">
                             <tr>
                                 <td data-bind="text: NomePropriedade"></td>
                                 <td data-bind="text: SaldoComVacinaBovino"></td>
-                                <td data-bind="text: SaldoComVacinaBubalino"></td>
                                 <td data-bind="text: SaldoSemVacinaBovino"></td>
+                                <td data-bind="text: SaldoComVacinaBubalino"></td>
                                 <td data-bind="text: SaldoSemVacinaBubalino"></td>
                             </tr>
+                            <tr class="table-ligth">
+                                <th colspan="1">Total:</th>
+                                <th colspan="2" class="text-center" data-bind="text: TotalBovino"></th>
+                                <th colspan="2" class="text-center" data-bind="text: TotalBubalino"></th>
+                            </tr>
+                        </tbody>
+                        <tbody data-bind="visible: !produtorTemRebanho()">
+                            <tr >
+                                <th colspan="5" class="text-center text-danger ">Produtor não possui rebanho.</th>
+                            </tr>
+
                         </tbody>
                     </table>
                 </fieldset>
@@ -70,28 +80,32 @@
                                                                         value: NomePropriedade">
                     </select>
                     <br />
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-info">
                         <thead>
                             <tr>
-                                <th colspan="1" class="text-center"></th>
-                                <th colspan="2" class="text-center">Com Vacina</th>
-                                <th colspan="2" class="text-center">Sem Vacina</th>
+                                <th colspan="1" rowspan="2" class="align-middle">Produtor</th>
+                                <th colspan="2" class="text-center">Bovino</th>
+                                <th colspan="2" class="text-center">Bubalino</th>
                             </tr>
                             <tr>
-                                <th scope="col">Produtor</th>
-                                <th scope="col">Bovino</th>
-                                <th scope="col">Bubalino</th>
-                                <th scope="col">Bovino</th>
-                                <th scope="col">Bubalino</th>
+                                <th scope="col" class="text-center">Com Vacina</th>
+                                <th scope="col" class="text-center">Sem Vacina</th>
+                                <th scope="col" class="text-center">Com Vacina</th>
+                                <th scope="col" class="text-center">Sem Vacina</th>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: animaisPorPropriedade">
                             <tr>
                                 <td data-bind="text: NomeProdutor"></td>
                                 <td data-bind="text: SaldoComVacinaBovino"></td>
-                                <td data-bind="text: SaldoComVacinaBubalino"></td>
                                 <td data-bind="text: SaldoSemVacinaBovino"></td>
+                                <td data-bind="text: SaldoComVacinaBubalino"></td>                                
                                 <td data-bind="text: SaldoSemVacinaBubalino"></td>
+                            </tr>
+                             <tr class="table-ligth">
+                                <th colspan="1">Total:</th>
+                                <th colspan="2" class="text-center" data-bind="text: TotalBovino"></th>
+                                <th colspan="2" class="text-center" data-bind="text: TotalBubalino"></th>
                             </tr>
                         </tbody>
                     </table>

@@ -44,11 +44,11 @@
             </div>
         </div>
         <br />
-        <table class="table table-bordered">
+        <table class="table table-bordered table-info">
             <thead>
                 <tr>
-                    <th colspan="2" class="text-center bg-info">Saldo disponível para venda</th>
-                    <th colspan="2" class="text-center bg-info">Informe a quantidade de animais para o venda</th>
+                    <th colspan="2" class="text-center ">Saldo disponível para venda</th>
+                    <th colspan="2" class="text-center ">Informe a quantidade de animais para o venda</th>
                 </tr>
                 <tr>
                     <th scope="col">Bovino</th>
@@ -67,10 +67,7 @@
                 <tr data-bind="visible: !$parent.existeSaldoParaVenda()">
                     <th colspan="4" class="text-center text-danger ">Propriedade não possui saldo para venda.</th>
                 </tr>
-            </tbody>
-            <tbody>
-
-            </tbody>
+            </tbody>            
         </table>
         <div class="container">
             <fieldset class="form-group border col-sm-12">
@@ -106,6 +103,8 @@
             </div>
         </div>
     </fieldset>
+
+
     <div class="modal fade" id="dialogComprasEVendas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -119,7 +118,7 @@
                     <form>
                         <div class="form-group row">
                             <div class="form-group col-sm-4">
-                                <label for="cpf" class="col-form-label">Propriedade</label>
+                                <label for="cpf" class="col-form-label">Produtor</label>
                                 <select class="form-control " data-bind="options: produtores,
                                                                         optionsText: 'Nome',
                                                                         optionsValue: 'ProdutorId',
@@ -128,9 +127,9 @@
                                 </select>
                             </div>
                             <div class="container">
-                                <table class="table table-bordered table-sm">
+                                <table class="table table-bordered table-sm table-info">
                                     <thead>
-                                        <tr class="text-center">
+                                        <tr class="text-center ">
                                             <th scope="col">Codigo Historico</th>
                                             <th scope="col">Propriedade Origem</th>
                                             <th scope="col">Propriedade Destino</th>

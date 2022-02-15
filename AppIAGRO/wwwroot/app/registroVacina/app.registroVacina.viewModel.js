@@ -132,6 +132,8 @@ app.registroVacina.viewModel = function () {
             var validacao = "";
             var qtdBovinoSemVacina;
             var qtdBubalinoSemVacina;
+            var dataAtual = new Date();
+            var dataVacinacao = new Date(self.DataVacinacao());
 
             if (self.NomePropriedade() == undefined)
                 validacao += "* Propriedade é obrigatória. \n"
@@ -145,10 +147,9 @@ app.registroVacina.viewModel = function () {
                 validacao += "* Tipo da vacina aplicada é obrigatório.  \n"
 
 
-
-
-            var anoVacinacaoInformada = new Date(self.DataVacinacao()).getFullYear();
-            if (anoVacinacaoInformada != new Date().getFullYear())
+            if (dataVacinacao > dataAtual)
+                validacao += "* Data de vacinação nao pode ser maior que a data atual.  \n"               
+            else if (dataVacinacao.getFullYear() != dataAtual.getFullYear())
                 validacao += "* Ano de vacinacao deve ser do ano atual.  \n"
 
             if (self.NomePropriedade() != undefined) {
@@ -172,6 +173,20 @@ app.registroVacina.viewModel = function () {
             if (self.registrosDeVacinas().length > 0) 
                 return true;              
             else 
+                return false;
+        });
+        self.existeSaldoSemVacina = ko.computed(function () {
+            if (self.animaisPorPropriedade().length > 0) {
+                let qtdSemVacinaBovino = self.animaisPorPropriedade()[0].SaldoSemVacinaBovino();
+                let qtdSemVacinaBubalino = self.animaisPorPropriedade()[0].SaldoSemVacinaBubalino();
+
+                if (qtdSemVacinaBovino > 0 || qtdSemVacinaBubalino > 0)
+                    return true;
+                else
+                    return false;
+
+            } 
+            else
                 return false;
         });
 

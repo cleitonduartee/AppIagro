@@ -50,7 +50,7 @@ app.propriedade.viewModel = function () {
             const url = `http://localhost:62978/api/v1/Animais/BuscarPorPropriedade/${nomePropriedade}`;
             fetch(url)
                 .then(p => p.json())
-                .then(animais => {
+                .then(animais => {                    
                     self.animaisPorPropriedade.removeAll();
                     self.animaisPorPropriedade.push(new model.animal(animais));
                 })
@@ -60,7 +60,7 @@ app.propriedade.viewModel = function () {
             const url = `http://localhost:62978/api/v1/Animais/BuscarPorProdutor/${nomeProdutor}`;
             fetch(url)
                 .then(p => p.json())
-                .then(listAnimais => {                   
+                .then(listAnimais => {                    
                     self.animaisPorProdutor.removeAll();
                     listAnimais.forEach(item => {
                         self.animaisPorProdutor.push(new model.animal(item));
@@ -124,7 +124,7 @@ app.propriedade.viewModel = function () {
                     alert(e);
                 })
         };
-
+       
         self.NomePropriedade = ko.observable();
         self.NomePropriedade.subscribe(function (nomePropriedade) {
             if (nomePropriedade != undefined)
@@ -179,6 +179,16 @@ app.propriedade.viewModel = function () {
             })
 
         };
+        self.produtorTemRebanho = ko.computed(function () {
+            if (self.NomeProdutor() != undefined) {
+                if (self.animaisPorProdutor().length > 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+        });
         self.RealizaCancelamento = function (historico) {
             self.CancelarEntradaDeAnimaisNaApi(historico.CodigoHistorico());
         }
