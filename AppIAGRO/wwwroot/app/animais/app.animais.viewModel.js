@@ -111,17 +111,17 @@ app.propriedade.viewModel = function () {
                 body: {}
             }
             return fetch(url, options)
-                .then(resp => {
+                .then(async resp => {
                     if (resp.ok) {
                         alert("Entrada cancelada com sucesso.");
                         $('#dialogCancelarEntraAnimais').modal('hide');
                         self.ResetVariaveis();
                     } else {
-                        alert('Erro ao realizar cancelamento de entrada de animais.');
+                        throw new Error(await resp.json());
                     }
                 })
-                .catch(e => {
-                    alert(e);
+                .catch(error => {
+                    alert(error.message);
                 })
         };
        
@@ -189,6 +189,16 @@ app.propriedade.viewModel = function () {
             else
                 return true;
         });
+        self.existeHistoricoDeEntrada = ko.computed(function () {
+            if (self.PropriedadeId() != undefined) {
+                if (self.HistoricoEntradas().length > 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+        })
         self.RealizaCancelamento = function (historico) {
             self.CancelarEntradaDeAnimaisNaApi(historico.CodigoHistorico());
         }

@@ -61,10 +61,9 @@
                             </tr>
                         </tbody>
                         <tbody data-bind="visible: !produtorTemRebanho()">
-                            <tr >
+                            <tr>
                                 <th colspan="5" class="text-center text-danger ">Produtor não possui rebanho.</th>
                             </tr>
-
                         </tbody>
                     </table>
                 </fieldset>
@@ -99,10 +98,10 @@
                                 <td data-bind="text: NomeProdutor"></td>
                                 <td data-bind="text: SaldoComVacinaBovino"></td>
                                 <td data-bind="text: SaldoSemVacinaBovino"></td>
-                                <td data-bind="text: SaldoComVacinaBubalino"></td>                                
+                                <td data-bind="text: SaldoComVacinaBubalino"></td>
                                 <td data-bind="text: SaldoSemVacinaBubalino"></td>
                             </tr>
-                             <tr class="table-ligth">
+                            <tr class="table-ligth">
                                 <th colspan="1">Total:</th>
                                 <th colspan="2" class="text-center" data-bind="text: TotalBovino"></th>
                                 <th colspan="2" class="text-center" data-bind="text: TotalBubalino"></th>
@@ -176,9 +175,9 @@
                                                                         value: PropriedadeId">
                                 </select>
                             </div>
-                            <div  class="container">
-                                <table class="table table-bordered">
-                                    <thead >
+                            <div class="container">
+                                <table class="table table-bordered table-info">
+                                    <thead>
                                         <tr class="text-center">
                                             <th class="text-truncate col-xs-2 col-sm-2" scope="col">Codigo Historico</th>
                                             <th class="col-xs-1 col-sm-1">Bovino</th>
@@ -195,14 +194,19 @@
                                             <td data-bind="text: QtdBubalino"></td>
                                             <td data-bind="text: DataMovimentacao"></td>
                                             <td data-bind="text: Status"></td>
-                                            <td><button data-bind="click: $parent.RealizaCancelamento " type="button" class="btn btn-warning" >Cancelar</button></td>
+                                            <td><button data-bind="click: $parent.RealizaCancelamento, disable: Status() == 'CANCELADO' " type="button" class="btn btn-warning">Cancelar</button></td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody data-bind="visible: !existeHistoricoDeEntrada()">
+                                        <tr>
+                                            <th colspan="6" class="text-center text-danger ">Não existe registro(s) de entrada(s) para essa propriedade.</th>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </form>
-                </div>               
+                </div>
             </div>
         </div>
     </div>

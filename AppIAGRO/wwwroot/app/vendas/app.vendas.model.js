@@ -14,6 +14,7 @@ app.vendas.model = function () {
         self.dataMovimentacao = ko.observable(new Date(historico.dataMovimentacao).toLocaleDateString());
         self.dataCancelamento = ko.observable(historico.dataCancelamento == null ? '' : new Date(historico.dataCancelamento).toLocaleDateString()  );
         self.finalidade = ko.observable(historico.finalidade);
+        self.status = ko.observable(historico.status);
     }
     return {
         historico: historico

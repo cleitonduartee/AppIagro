@@ -170,10 +170,13 @@ app.registroVacina.viewModel = function () {
 
         }
         self.existeRegistrosDeVacina = ko.computed(function () {
-            if (self.registrosDeVacinas().length > 0) 
-                return true;              
-            else 
-                return false;
+            if (self.PropriedadeId() != undefined) {
+                if (self.registrosDeVacinas().length > 0)
+                    return true;
+                else
+                    return false;
+            } else
+                return true;
         });
         self.existeSaldoSemVacina = ko.computed(function () {
             if (self.animaisPorPropriedade().length > 0) {

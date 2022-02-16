@@ -71,6 +71,22 @@ app.vendas.services = function () {
                 alert(error.message);
             });
     };
+    var BuscarVendasPorIdPropriedadeNaApi = function (idPropriedade) {
+        const url = `http://localhost:62978/api/v1/Vendas/BuscarVendasPorPropriedade/${idPropriedade}`;
+        return fetch(url)
+            .then(resp => {
+                if (resp.ok) {
+                    return resp.json();
+                }
+                else {
+                    throw new Error(resp.statusText);
+                }
+
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+    };
     var BuscarComprasPorIdProdutorNaApi = function (idProdutor) {
         const url = `http://localhost:62978/api/v1/Vendas/BuscarComprasPorProdutor/${idProdutor}`;
         return fetch(url)
@@ -109,13 +125,38 @@ app.vendas.services = function () {
 
     };
 
+    var CancelarVenda = function (codigoVenda) {
+        const url = ` http://localhost:62978/api/v1/Vendas/CancelarVenda/${codigoVenda} `;
+
+        const options = {
+            method: 'POST',
+            mode: 'cors',
+            headers: header,
+            body: {}
+        }
+        return fetch(url, options)
+            .then(async resp => {
+                if (resp.ok) {
+                    return true;
+                } else {
+                    throw new Error(await resp.json());
+                }
+            })
+            .catch(error => {
+                alert(error.message);
+            })
+
+    };
+
     return {
         BuscarPropriedadesNaApi: BuscarPropriedadesNaApi,
         BuscarProdutoresNaApi: BuscarProdutoresNaApi,
         BuscarAnimaisPorNomePropriedadeNaApi: BuscarAnimaisPorNomePropriedadeNaApi,
         BuscarVendasPorIdProdutorNaApi: BuscarVendasPorIdProdutorNaApi,
+        BuscarVendasPorIdPropriedadeNaApi: BuscarVendasPorIdPropriedadeNaApi,
         BuscarComprasPorIdProdutorNaApi: BuscarComprasPorIdProdutorNaApi,
-        RealizarVendaNaApi: RealizarVendaNaApi
+        RealizarVendaNaApi: RealizarVendaNaApi,
+        CancelarVenda: CancelarVenda
 
     };
 

@@ -18,6 +18,12 @@ app.registroVacina.model = function () {
         self.QtdBovinoVacinado = ko.observable(registroVacina.qtdBovinoVacinado);
         self.QtdBubalinoVacinado = ko.observable(registroVacina.qtdBubalinoVacinado);
         self.DataVacinacao = ko.observable(new Date(registroVacina.dataVacinacao).toLocaleDateString());
+        self.Situacao = ko.computed(function () {
+            if (registroVacina.ativo == true)
+                return "ATIVO";
+            else
+                return "CANCELADO";
+        });
     }
     return {
         registroVacina: registroVacina

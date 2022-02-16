@@ -25,10 +25,12 @@ app.vendas.viewModel = function () {
 
         self.nomePropriedadeOrigem = ko.observable();
         self.propriedadeIdDestino = ko.observable();
+        self.propriedadeIdCancelarVendas = ko.observable();
         self.produtorIdBuscaComprasEVendas = ko.observable();
         self.tituloDialogCompraVendas = ko.observable();
         self.produtores = ko.observableArray();
         self.historicosComprasEVendas = ko.observableArray();
+        self.historicosVendasParaCancelar = ko.observableArray();
         self.animaisPropriedadeOrigem = ko.observableArray();
         self.propriedadesOrigem = ko.observableArray();
         self.propriedadesDestino = ko.observableArray();
@@ -62,6 +64,20 @@ app.vendas.viewModel = function () {
             else 
                 return false;
         });
+        self.existeMovimentacoesDeVendas = ko.computed(function () {
+            if (self.propriedadeIdCancelarVendas() != undefined) {
+                if (self.historicosVendasParaCancelar().length > 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+           
+        });
+
+
+
         self.msgQuandoNaoExisteMovimentacao = ko.computed(function () {
 
             if (self.produtorIdBuscaComprasEVendas() != undefined) {
@@ -85,6 +101,8 @@ app.vendas.viewModel = function () {
             self.finalidade(undefined);
             self.produtorIdBuscaComprasEVendas(undefined);
             self.historicosComprasEVendas.removeAll();
+            self.propriedadeIdCancelarVendas(undefined);
+
         }
 
 
@@ -102,7 +120,6 @@ app.vendas.viewModel = function () {
             }
         });
         self.produtorIdBuscaComprasEVendas.subscribe(function (produtorId) {
-            console.log(produtorId);
             if (produtorId != undefined) {
                 if (self.eBuscaDeCompras()) {
                     services.BuscarComprasPorIdProdutorNaApi(produtorId)
@@ -128,6 +145,20 @@ app.vendas.viewModel = function () {
             else
                 self.reset();
         });
+        self.propriedadeIdCancelarVendas.subscribe(function (propriedadeId) {
+            if (propriedadeId != undefined) {
+                services.BuscarVendasPorIdPropriedadeNaApi(propriedadeId)
+                    .then(listHistoricos => {
+                        self.historicosVendasParaCancelar.removeAll();
+                        listHistoricos.forEach(function (item) {
+                            self.historicosVendasParaCancelar.push(new model.historico(item));
+                        });
+
+                    });
+            }
+            else
+                self.reset();
+        });
 
         self.realizarVenda = function (event) {
             if (!self.vendaEValida())
@@ -143,9 +174,6 @@ app.vendas.viewModel = function () {
                         self.reset();
                     }
                 });
-            
-
-            
         }
         self.montaBody = function () {
             var qtdBovinoVenda = self.qtdBovinoVenda();
@@ -161,6 +189,19 @@ app.vendas.viewModel = function () {
             }
             return body;
         }
+
+        self.realizarCancelamentoDeVenda = function (event) {
+            services.CancelarVenda(event.codigoHistorico())
+                .then(resp => {
+                    self.historicosVendasParaCancelar.removeAll();
+                    if (resp) {
+                        alert("Venda cancelado com sucesso.");
+                        $('#dialogCancelarVendas').modal('hide');
+                    }
+                    self.reset();
+                });
+        }
+
         self.preparaBuscaCompras = function () {
             self.eBuscaDeCompras(true);
             self.tituloDialogCompraVendas('Buscar compras');

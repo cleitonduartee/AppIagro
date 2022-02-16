@@ -155,6 +155,7 @@
                                             <th scope="col">Bovino</th>
                                             <th scope="col">Bubalino</th>
                                             <th scope="col">Data Vacinação</th>
+                                            <th scope="col">Situação</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
@@ -165,10 +166,13 @@
                                             <td data-bind="text: QtdBovinoVacinado"></td>
                                             <td data-bind="text: QtdBubalinoVacinado"></td>
                                             <td data-bind="text: DataVacinacao"></td>
-                                            <td><button data-bind="click: $parent.RealizaCancelamento " type="button" class="btn btn-warning">Cancelar</button></td>
-                                        </tr>
-                                        <tr data-bind="visible: !$parent.existeRegistrosDeVacina()">
-                                            <th colspan="1" class="text-center text-danger ">Propriedade não possui saldo para venda.</th>
+                                            <td data-bind="text: Situacao"></td>
+                                            <td><button data-bind="click: $parent.RealizaCancelamento, disable: Situacao() == 'CANCELADO' " type="button" class="btn btn-warning">Cancelar</button></td>
+                                        </tr>                                       
+                                    </tbody>
+                                    <tbody data-bind="visible: !$root.existeRegistrosDeVacina()">
+                                         <tr >
+                                            <th colspan="7" class="text-center text-danger ">Propriedade não possui registro(s) de vacina(s).</th>
                                         </tr>
                                     </tbody>
                                 </table>
