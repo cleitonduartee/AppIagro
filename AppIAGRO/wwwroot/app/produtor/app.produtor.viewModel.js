@@ -147,7 +147,8 @@ app.produtor.viewModel = function () {
         }
         self.ProdutorEValido = function () {           
             var validacao = "";
-            var cpfEValido = self.CpfEValido(self.Cpf());
+
+            var cpfEValido = self.CpfEValido(self.retiraMascaraCpf(self.Cpf()));
 
             if (!self.Nome() || self.Nome() == undefined)
                 validacao += "* Nome é preenchimento obrigatório. \n"
@@ -167,7 +168,7 @@ app.produtor.viewModel = function () {
             return true;
                 
         }
-        self.CpfEValido = function (cpf) {            
+        self.CpfEValido = function (cpf) {
             let eNumero = !isNaN(cpf);
             
             if (!eNumero)
@@ -177,50 +178,29 @@ app.produtor.viewModel = function () {
 
             return true;
         }
-        //self.texto = ko.observable('Testando Knockout');
+        self.mascaraCpf = ko.computed(function () {
+            let cpf = "";
+            cpf += self.Cpf();
+            if (cpf.length == 3 || cpf.length == 7) {
+                cpf += ".";
+                self.Cpf(cpf);
+            } else if (cpf.length == 11) {
+                cpf += "-";
+                self.Cpf(cpf);
+            }
+            
 
-
-        //self.controlerTexto = ko.computed(function () {
-        //    return self.texto().length == 0;
-        //});
+        });
+        self.retiraMascaraCpf = function (cpf) {
+            return cpf.replace(".", "").replace(".", "").replace("-", "");
+        };
 
        
 
     });
 
 
-    //const self = this;
-
-    //self.produtores = ko.observableArray();
-    //self.produtor = model;
-    //self.texto = ko.observable('Testando Knockout');
-
-    ////let controlerTexto = ko.observable(false);
-
-    ////texto.subscribe(function (value) {
-    ////    controlerTexto( value.length == 0)
-    ////});
-
-    //self.controlerTexto = ko.computed(function () {
-    //    return texto().length == 0;
-    //});
-
-    //self.Clicou = function () {
-    //    console.log("Clicou ");
-    //    fetch('http://localhost:62978/api/v1/Produtor/BuscarTodos')
-    //        .then(function (listProdutores) {
-    //            listProdutores.forEach(function (item) {
-    //                self.produtores.push(new model.produtor(item));
-    //            });
-    //        })            
-    //};
-
-    /*return { texto, controlerTexto, Clicou };*/
 }();
-
-
-//ko.applyBindings(app);
-
 
 
 

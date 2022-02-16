@@ -109,10 +109,7 @@ app.propriedade.viewModel = function () {
         self.propriedades = ko.observableArray();
         self.municipios = ko.observableArray([]);
 
-        self.preparaEdicao = function (propriedade) {
-            
-            self.BuscarMunicipiosNaApi();
-            self.BuscarProdutoresNaApi();
+        self.preparaEdicao = function (propriedade) {  
 
             self.isEditing(true);        
             self.PropriedadeId(propriedade.PropriedadeId());
@@ -186,6 +183,8 @@ app.propriedade.viewModel = function () {
 
             return true;
         }
+        self.BuscarMunicipiosNaApi();
+        self.BuscarProdutoresNaApi();
        
     });
 

@@ -52,8 +52,8 @@
                                 <input type="text" class="form-control" id="nome" data-bind="value: Nome">
                             </div>
                             <div class="form-group col-sm-5">
-                                <label for="cpf" class="col-form-label">Cpf:</label>
-                                <input class="form-control" id="cpf" data-bind="value: Cpf"></input>
+                                <label for="cpf" class="col-form-label " >Cpf:</label>
+                                <input class="form-control cpf-mask" placeholder="Ex.: 000.000.000-00" id="cpf" maxlength="14"   data-bind="value: Cpf, valueUpdate: 'afterkeydown'" autocomplete="off"></input>
                             </div>
                         </div>
 
