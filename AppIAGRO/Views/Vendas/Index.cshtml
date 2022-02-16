@@ -5,11 +5,11 @@
     <h1>@ViewData["Title"]</h1>
     <div class="d-flex align-items-end flex-column">
         <div class="p-2">
-            <span>Buscar compras por propdutor</span>
+            <span>Buscar compras por produtor</span>
             <button type="button" data-bind="click: preparaBuscaCompras" class="btn btn-outline-info" data-toggle="modal" data-target="#dialogComprasEVendas">Buscar</button>
         </div>
         <div class="p-2">
-            <span>Buscar vendas por propdutor</span>
+            <span>Buscar vendas por produtor</span>
             <button type="button" data-bind="click: preparaBuscaVendas" class="btn btn-outline-info" data-toggle="modal" data-target="#dialogComprasEVendas">Buscar</button>
         </div>
         <div class="p-2">
@@ -75,19 +75,19 @@
 
                 <div class="form-check d-flex justify-content-around">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value=0 data-bind="checked: finalidade" name="flexRadioDefault" id="AFTOSA">
-                        <label class="form-check-label" for="AFTOSA">
+                        <input class="form-check-input" type="radio" value=1 data-bind="checked: finalidade" name="flexRadioDefault" id="REPRODUCAO">
+                        <label class="form-check-label" for="REPRODUCAO">
                             REPRODUÇÃO
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value=1 data-bind="checked: finalidade" name="flexRadioDefault" id=" BRUCELOSE_B19" checked>
+                        <input class="form-check-input" type="radio" value=2 data-bind="checked: finalidade" name="flexRadioDefault" id=" BRUCELOSE_B19" checked>
                         <label class="form-check-label" for=" BRUCELOSE_B19">
                             ENGORDA
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value=2 data-bind="checked: finalidade" name="flexRadioDefault" id="BRUCELOSE_RB51" checked>
+                        <input class="form-check-input" type="radio" value=3 data-bind="checked: finalidade" name="flexRadioDefault" id="BRUCELOSE_RB51" checked>
                         <label class="form-check-label" for="BRUCELOSE_RB51">
                             TRABALHO
                         </label>
