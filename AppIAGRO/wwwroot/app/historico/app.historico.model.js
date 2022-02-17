@@ -3,7 +3,7 @@ app.historico = app.historico || {};
 
 app.historico.model = function () {
 
-    var historicoEntrada = function (historico) {
+    var HistoricoEntrada = function (historico) {
         var self = this;
                 
         self.CodigoHistorico = ko.observable(historico.codigoHistorico);
@@ -21,7 +21,7 @@ app.historico.model = function () {
    
 
     return {
-        historicoEntrada: historicoEntrada
+        HistoricoEntrada: HistoricoEntrada
     };
 }();
 

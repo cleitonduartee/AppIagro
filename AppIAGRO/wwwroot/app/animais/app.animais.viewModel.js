@@ -29,7 +29,7 @@ app.propriedade.viewModel = function () {
                 .then(p => p.json())
                 .then(listPropriedade => {
                     listPropriedade.forEach(function (item) {
-                        self.propriedades.push(new modelPropriedade.propriedade(item));
+                        self.propriedades.push(new modelPropriedade.Propriedade(item));
                     });
                 })
         };
@@ -38,7 +38,7 @@ app.propriedade.viewModel = function () {
                 .then(p => p.json())
                 .then(listProdutores => {
                     listProdutores.forEach(function (item) {
-                        self.produtores.push(new modelProdutor.produtor(item));
+                        self.produtores.push(new modelProdutor.Produtor(item));
                     });
                 })
         };
@@ -52,7 +52,7 @@ app.propriedade.viewModel = function () {
                 .then(p => p.json())
                 .then(animais => {                    
                     self.animaisPorPropriedade.removeAll();
-                    self.animaisPorPropriedade.push(new model.animal(animais));
+                    self.animaisPorPropriedade.push(new model.Animal(animais));
                 })
         };
 
@@ -63,7 +63,7 @@ app.propriedade.viewModel = function () {
                 .then(listAnimais => {                    
                     self.animaisPorProdutor.removeAll();
                     listAnimais.forEach(item => {
-                        self.animaisPorProdutor.push(new model.animal(item));
+                        self.animaisPorProdutor.push(new model.Animal(item));
                     });
                 })
         };
@@ -98,7 +98,7 @@ app.propriedade.viewModel = function () {
                 .then(listEntradas => {
                     self.HistoricoEntradas.removeAll();
                     listEntradas.forEach(item => {
-                        self.HistoricoEntradas.push(new modelHistorico.historicoEntrada(item));
+                        self.HistoricoEntradas.push(new modelHistorico.HistoricoEntrada(item));
                     });
                 })
         };

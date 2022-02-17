@@ -8,6 +8,20 @@ app.registroVacina.services = function () {
         "X-Custom-Header": "ProcessThisImmediately",
     });
 
+    var BuscarAnimaisPorNomePropriedadeNaApi = function (nomePropriedade) {
+        const url = `http://localhost:62978/api/v1/Animais/BuscarPorPropriedade/${nomePropriedade}`;
+        return fetch(url)
+            .then(async resp => {
+                if (resp.ok)
+                    return resp.json();
+                else
+                    throw new Error(await resp.json());
+            })
+            .catch(error => {
+                alert(error.message);
+            })
+    };
+
     var BuscarPropriedadesNaApi = function () {
         return fetch('http://localhost:62978/api/v1/Propriedade/BuscarTodos')
             .then(async resp => {
@@ -86,6 +100,7 @@ app.registroVacina.services = function () {
 
     };
     return {
+        BuscarAnimaisPorNomePropriedadeNaApi: BuscarAnimaisPorNomePropriedadeNaApi,
         BuscarPropriedadesNaApi: BuscarPropriedadesNaApi,
         RegistrarVacinacaoNaApi: RegistrarVacinacaoNaApi,
         BuscarRegistrosDeVacinaNaApi: BuscarRegistrosDeVacinaNaApi,

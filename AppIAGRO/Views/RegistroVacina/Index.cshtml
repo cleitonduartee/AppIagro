@@ -39,7 +39,7 @@
                         <div class="form-group row">
                             <div class="form-group col-sm-6">
                                 <label for="cpf" class="col-form-label">Propriedade</label>
-                                <select class="form-control " data-bind="options: propriedades,
+                                <select class="form-control " data-bind="options: Propriedades,
                                                                         optionsText: 'NomePropriedade',
                                                                         optionsValue: 'NomePropriedade',
                                                                         optionsCaption: 'Selecione uma propriedade...',
@@ -65,14 +65,14 @@
                                             <th scope="col">Bubalino</th>
                                         </tr>
                                     </thead>
-                                    <tbody data-bind="foreach: animaisPorPropriedade">
+                                    <tbody data-bind="foreach: AnimaisPorPropriedade">
                                         <tr>
                                             <td data-bind="text: SaldoSemVacinaBovino">10</td>
                                             <td data-bind="text: SaldoSemVacinaBubalino">20</td>
                                             <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBovinoVacinado, disable: SaldoSemVacinaBovino() == 0,  attr: { max: SaldoSemVacinaBovino }" /></td>
                                             <td><input class="form-control" type="number" min="0" data-bind="value: $parent.QtdBubalinoVacinado, disable: SaldoSemVacinaBubalino() == 0,  attr: { max: SaldoSemVacinaBubalino }" /></td>
                                         </tr>
-                                        <tr data-bind="visible: !$parent.existeSaldoSemVacina()">
+                                        <tr data-bind="visible: !$parent.ExisteSaldoSemVacina()">
                                             <th colspan="4" class="text-center text-danger ">Propriedade não possui animais sem vacina.</th>
                                         </tr>
                                     </tbody>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bind="click: ResetVariaveis" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-info" id="btnDialog" data-bind="disable: !existeSaldoSemVacina(), click: RealizaRegistroVacinacao">Confirmar</button>
+                    <button type="button" class="btn btn-info" id="btnDialog" data-bind="disable: !ExisteSaldoSemVacina(), click: RealizaRegistroVacinacao">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -139,7 +139,7 @@
                         <div class="form-group row">
                             <div class="form-group col-sm-6">
                                 <label for="cpf" class="col-form-label">Propriedade</label>
-                                <select class="form-control " data-bind="options: propriedades,
+                                <select class="form-control " data-bind="options: Propriedades,
                                                                         optionsText: 'NomePropriedade',
                                                                         optionsValue: 'PropriedadeId',
                                                                         optionsCaption: 'Selecione uma propriedade...',
@@ -159,8 +159,8 @@
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
-                                    <tbody data-bind="foreach: registrosDeVacinas">
-                                        <tr data-bind="visible: $parent.existeRegistrosDeVacina" class="text-center">
+                                    <tbody data-bind="foreach: RegistrosDeVacinas">
+                                        <tr data-bind="visible: $parent.ExisteRegistrosDeVacina" class="text-center">
                                             <td data-bind="text: CodigoRegistro"></td>
                                             <td data-bind="text: TipoVacina"></td>
                                             <td data-bind="text: QtdBovinoVacinado"></td>
@@ -170,7 +170,7 @@
                                             <td><button data-bind="click: $parent.RealizaCancelamento, disable: Situacao() == 'CANCELADO' " type="button" class="btn btn-warning">Cancelar</button></td>
                                         </tr>                                       
                                     </tbody>
-                                    <tbody data-bind="visible: !$root.existeRegistrosDeVacina()">
+                                    <tbody data-bind="visible: !$root.ExisteRegistrosDeVacina()">
                                          <tr >
                                             <th colspan="7" class="text-center text-danger ">Propriedade não possui registro(s) de vacina(s).</th>
                                         </tr>

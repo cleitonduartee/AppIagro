@@ -3,7 +3,7 @@ app.animais = app.animais || {};
 
 app.animais.model = function () {
 
-    var animal = function (animal) {
+    var Animal = function (animal) {
         var self = this;
 
         self.PropriedadeId = ko.observable(animal.propriedadeId);
@@ -23,7 +23,7 @@ app.animais.model = function () {
    
 
     return {
-        animal: animal
+        Animal: Animal
     };
 }();
 

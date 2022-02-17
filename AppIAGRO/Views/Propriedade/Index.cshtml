@@ -22,12 +22,12 @@
                 <td data-bind="text: NomePropriedade"></td>
                 <td data-bind="text: NomeProdutor"></td>
                 <td data-bind="text: MunicipioPropriedade"></td>
-                <td><button data-bind="click: $parent.preparaEdicao" type="button" class="btn btn-warning" data-toggle="modal" data-target="#dialogPropriedade">Editar</button></td>
+                <td><button data-bind="click: $parent.PreparaEdicao" type="button" class="btn btn-warning" data-toggle="modal" data-target="#dialogPropriedade">Editar</button></td>
             </tr>
         </tbody>
     </table>
     <div class="modal-footer row justify-content-center">
-        <button data-bind="click: preparaNovoCadastro" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#dialogPropriedade">Cadastrar</button>
+        <button data-bind="click: PreparaNovoCadastro" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#dialogPropriedade">Cadastrar</button>
     </div>
     
 
@@ -80,8 +80,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-warning" id="btnDialog" data-bind="visible: IsEditing, click: atualizar ">Atualizar</button>
-                    <button type="button" class="btn btn-primary" id="btnDialog" data-bind="visible: !IsEditing(), click: inserirNovo ">Cadastrar</button>
+                    <button type="button" class="btn btn-warning" id="btnDialog" data-bind="visible: IsEditing, click: Atualizar ">Atualizar</button>
+                    <button type="button" class="btn btn-primary" id="btnDialog" data-bind="visible: !IsEditing(), click: InserirNovo ">Cadastrar</button>
                 </div>
             </div>
         </div>

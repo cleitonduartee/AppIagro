@@ -33,12 +33,12 @@ app.propriedade.viewModel = function () {
         *  FUNÇÕES AUXILIAR VM
         */
 
-        self.preparaNovoCadastro = function () {
+        self.PreparaNovoCadastro = function () {
             self.IsEditing(false);
             self.Reset();
         }
 
-        self.preparaEdicao = function (propriedade) {  
+        self.PreparaEdicao = function (propriedade) {  
 
             self.IsEditing(true);
             self.PropriedadeId(propriedade.PropriedadeId());
@@ -87,7 +87,7 @@ app.propriedade.viewModel = function () {
          *  FUNÇÕES QUE CHAMAM AS FUNCOES QUE UTILIZAM A SERVICE
          */
 
-        self.inserirNovo = function () {
+        self.InserirNovo = function () {
 
             if (!self.PropriedadeEValido())
                 return;
@@ -98,7 +98,7 @@ app.propriedade.viewModel = function () {
             });
         }
 
-        self.atualizar = function () {
+        self.Atualizar = function () {
 
             if (!self.PropriedadeEValido())
                 return;
@@ -143,7 +143,7 @@ app.propriedade.viewModel = function () {
             services.BuscarPropriedadesNaApi()
                 .then(listPropriedade => {
                     listPropriedade.forEach(function (item) {
-                        self.Propriedades.push(new model.propriedade(item));
+                        self.Propriedades.push(new model.Propriedade(item));
 
                     });
                 })

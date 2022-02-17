@@ -3,7 +3,7 @@ app.registroVacina = app.registroVacina || {};
 
 app.registroVacina.model = function () {
 
-    var registroVacina = function (registroVacina) {
+    var RegistroVacina = function (registroVacina) {
         var self = this;
         
         self.CodigoRegistro = ko.observable(registroVacina.codigoRegistro);
@@ -26,7 +26,7 @@ app.registroVacina.model = function () {
         });
     }
     return {
-        registroVacina: registroVacina
+        RegistroVacina: RegistroVacina
     };
 }();
 

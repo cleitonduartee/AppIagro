@@ -3,7 +3,7 @@ app.propriedade = app.propriedade || {};
 
 app.propriedade.model = function () {
 
-    var propriedade = function (propriedade) {
+    var Propriedade = function (propriedade) {
         var self = this;
         
         self.PropriedadeId = ko.observable(propriedade.propriedadeId);
@@ -17,7 +17,7 @@ app.propriedade.model = function () {
         });
     }
     return {
-        propriedade: propriedade
+        Propriedade: Propriedade
     };
 }();
 
