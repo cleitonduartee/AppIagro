@@ -19,17 +19,17 @@
                 <th scope="col"></th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: produtores">
+        <tbody data-bind="foreach: Produtores">
             <tr>
                 <td data-bind="text: Nome"></td>
-                <td data-bind="text: $parent.insereMascaraCpf(Cpf())"></td>
+                <td data-bind="text: $parent.InsereMascaraCpf(Cpf())"></td>
                 <td data-bind="text: EnderecoCompleto"></td>
-                <td><button data-bind="click: $parent.preparaEdicao" type="button" class="btn btn-warning" data-toggle="modal" data-target="#dialogProdutor">Editar</button></td>
+                <td><button data-bind="click: $parent.PreparaEdicao" type="button" class="btn btn-warning" data-toggle="modal" data-target="#dialogProdutor">Editar</button></td>
             </tr>
         </tbody>
     </table>
     <div class="modal-footer row justify-content-center">
-        <button data-bind="click: preparaNovoCadastro" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#dialogProdutor">Cadastrar</button>
+        <button data-bind="click: PreparaNovoCadastro" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#dialogProdutor">Cadastrar</button>
     </div>
 
     @*<button data-bind="click: BuscarProdutores">Buscar</button>*@
@@ -38,8 +38,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="nomeDialog" data-bind="if: isEditing ">Editar Produtor</h5>
-                    <h5 class="modal-title" id="nomeDialog" data-bind="ifnot: isEditing ">Novo Produtor</h5>
+                    <h5 class="modal-title" id="nomeDialog" data-bind="if: IsEditing ">Editar Produtor</h5>
+                    <h5 class="modal-title" id="nomeDialog" data-bind="ifnot: IsEditing ">Novo Produtor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,7 +71,7 @@
                                     <input class="form-control" id="Numero" data-bind="value: Numero"></input>
                                 </div>
                             </div>
-                            <select class="form-control form-control-sm"data-bind="options: municipios,
+                            <select class="form-control form-control-sm"data-bind="options: Municipios,
                                                                                    optionsText: 'Nome',
                                                                                    optionsValue: 'MunicipioId',
                                                                                    optionsCaption: 'Selecione um municipio...',
@@ -82,8 +82,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-warning" id="btnDialog" data-bind="visible: isEditing, click: atualizar ">Atualizar</button>
-                    <button type="button" class="btn btn-primary" id="btnDialog" data-bind="visible: !isEditing(), click: inserirNovo ">Cadastrar</button>
+                    <button type="button" class="btn btn-warning" id="btnDialog" data-bind="visible: IsEditing, click: Atualizar ">Atualizar</button>
+                    <button type="button" class="btn btn-primary" id="btnDialog" data-bind="visible: !IsEditing(), click: InserirNovo ">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -95,6 +95,7 @@
 
 @section Scripts{
 <script src="~/app/produtor/app.produtor.model.js"></script>
+<script src="~/app/produtor/app.produtor.services.js"></script>
 <script src="~/app/produtor/app.produtor.viewModel.js"></script>
 
 }

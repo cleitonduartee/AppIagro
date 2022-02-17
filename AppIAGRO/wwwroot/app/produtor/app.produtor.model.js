@@ -3,7 +3,7 @@ app.produtor = app.produtor || {};
 
 app.produtor.model = function () {
 
-    var produtor = function (produtor) {
+    var Produtor = function (produtor) {
         var self = this;
                 
         self.ProdutorId = ko.observable(produtor.produtorId);
@@ -15,28 +15,8 @@ app.produtor.model = function () {
         self.EnderecoCompleto = ko.computed(function () {            
             return "Rua : " + self.NomeRua() + ", n° " + self.Numero() + ", " + self.Municipio().nome + "-MS.";
         });
-    }
-    var edicaoProdutor = function (produtor) {
-        var self = this;
-        //console.log("Chegou:", produtor);
-
-        self.ProdutorId = ko.observable(produtor.ProdutorId());
-        self.Nome = ko.observable(produtor.Nome());
-        self.Cpf = ko.observable(produtor.Cpf());
-        self.NomeRua = ko.observable(produtor.NomeRua());
-        self.Numero = ko.observable(produtor.Numero());
-        self.Municipio = ko.observable(produtor.Municipio());
-    }
-    var novoProdutor = function (produtor) {
-        var self = this;
-
-        self.Nome = ko.observable(produtor.nome());
-        self.Cpf = ko.observable(produtor.cpf());
-        self.NomeRua = ko.observable(produtor.nomeRua());
-        self.Numero = ko.observable(produtor.numero());
-        self.Municipio = ko.observable(produtor.municipio());
-    }
-    var municipio = function (municipio) {
+    }  
+    var Municipio = function (municipio) {
        //console.log("Construtor municipio: ", municipio)
         var self = this;
         self.MunicipioId = ko.observable(municipio.municipioId);
@@ -44,9 +24,8 @@ app.produtor.model = function () {
     }
 
     return {
-        produtor: produtor,
-        edicaoProdutor: edicaoProdutor,
-        municipio: municipio
+        Produtor: Produtor,
+        Municipio: Municipio
     };
 }();
 

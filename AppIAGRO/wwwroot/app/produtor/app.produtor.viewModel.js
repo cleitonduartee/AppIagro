@@ -1,87 +1,15 @@
 ﻿var app = app || {};
 app.produtor = app.produtor || {};
 app.produtor.model = app.produtor.model || {};
+app.produtor.services = app.produtor.services || {};
 
 app.produtor.viewModel = function () {
-
-    const header = new Headers({
-        "Content-Type": "application/json",
-        "X-Custom-Header": "ProcessThisImmediately",
-    });
+       
     var model = app.produtor.model;
+    var services = app.produtor.services;
 
     ko.applyBindings(new function () {
         var self = this;
-
-        self.BuscarProdutoresNaApi = function () {
-            fetch('http://localhost:62978/api/v1/Produtor/BuscarTodos')
-                .then(p => p.json())
-                .then(listProdutores => {
-                    listProdutores.forEach(function (item) {
-                        self.produtores.push(new model.produtor(item));
-                    });
-                })
-        };
-        self.BuscarMunicipiosNaApi = function () {
-            fetch('http://localhost:62978/api/v1/Municipio/BuscarTodos')
-                .then(m => m.json())
-                .then(listMunicipios => {
-                    listMunicipios.forEach(function (item) {
-                        self.municipios.push(new model.municipio(item));
-
-                    });
-                })
-        };
-        self.BuscarProdutoresNaApi();
-        self.BuscarMunicipiosNaApi();
-
-        self.AtualizaNaAPi = function (body, id) {
-            const url = ` http://localhost:62978/api/v1/Produtor/EditarProdutor/${id} `;
-            const options = {
-                method: 'PUT',
-                mode: 'cors',
-                headers: header,
-                body: JSON.stringify(body)
-            }
-            return fetch(url, options)
-                .then(resp => {
-                    if (resp.ok) {
-                        console.log(resp.body)
-                        self.produtores([]);
-                        self.BuscarProdutoresNaApi();
-                        alert("Produtor atualizado com sucesso.");
-                        $('#dialogProdutor').modal('hide');
-                    } else {
-                        alert('Erro ao atualizar produtor. Tente novamente.');
-                    }
-                })
-                .catch(e => {
-                    alert(e);
-                })
-        }
-        self.CadastrarNaAPi = function (body) {
-            const url = "http://localhost:62978/api/v1/Produtor/CadastrarProdutor";
-            const options = {
-                method: 'POST',
-                mode: 'cors',
-                headers: header,
-                body: JSON.stringify(body)
-            }
-            return fetch(url, options)
-                .then(resp => {
-                    if (resp.ok) {
-                        self.produtores([]);
-                        self.BuscarProdutoresNaApi();
-                        alert("Produtor cadastrado com sucesso.");
-                        $('#dialogProdutor').modal('hide');
-                    } else {
-                        alert('Erro ao cadastrar produtor. Tente novamente.');
-                    }
-                })
-                .catch(e => {
-                    alert(e);
-                })
-        }
 
         self.ProdutorId = ko.observable();
         self.Nome = ko.observable();
@@ -90,36 +18,31 @@ app.produtor.viewModel = function () {
         self.Numero = ko.observable();
         self.MunicipioId = ko.observable();
 
-        self.isEditing = ko.observable(false);
+        self.IsEditing = ko.observable(false);
 
 
-        self.produtores = ko.observableArray();
-        self.produtor = ko.observable();
-        self.municipios = ko.observableArray([]);
+        self.Produtores = ko.observableArray();
+        self.Produtor = ko.observable();
+        self.Municipios = ko.observableArray([]);
 
-        self.preparaEdicao = function (produtor) {
 
-            self.isEditing(true);
-            self.produtor(new model.edicaoProdutor(produtor));
+        /**
+        *  FUNÇÕES AUXILIAR VM
+        */
+
+        self.PreparaNovoCadastro = function () {
+            self.IsEditing(false);
+            self.Reset();
+        }
+        self.PreparaEdicao = function (produtor) {
+
+            self.IsEditing(true);
             self.ProdutorId(produtor.ProdutorId());
             self.Nome(produtor.Nome());
-            self.Cpf(self.insereMascaraCpf(produtor.Cpf()));
+            self.Cpf(self.InsereMascaraCpf(produtor.Cpf()));
             self.NomeRua(produtor.NomeRua());
             self.Numero(produtor.Numero());
             self.MunicipioId(produtor.Municipio());
-
-        }
-        self.atualizar = function () {
-            //console.log("Validacao: ", self.Validacao());
-            if (!self.ProdutorEValido())
-                return;
-
-            var cpfFormatado = self.retiraMascaraCpf(self.Cpf());
-
-            self.AtualizaNaAPi({
-                produtorId: self.ProdutorId(), nome: self.Nome(), cpf: cpfFormatado,
-                nomeRua: self.NomeRua(), numero: self.Numero(), municipioId: self.MunicipioId()
-            }, self.ProdutorId());
 
         }
 
@@ -132,27 +55,11 @@ app.produtor.viewModel = function () {
             self.MunicipioId('');
 
         }
-
-        self.preparaNovoCadastro = function () {
-            self.isEditing(false);
-            self.Reset();
-        }
-        self.inserirNovo = function () {
-
-            if (!self.ProdutorEValido())
-                return;
-
-            var cpfFormatado = self.retiraMascaraCpf(self.Cpf());
-
-            self.CadastrarNaAPi({
-                nome: self.Nome(), cpf: cpfFormatado, nomeRua: self.NomeRua(),
-                numero: self.Numero(), municipioId: self.MunicipioId()
-            });
-        }
+       
         self.ProdutorEValido = function () {
             var validacao = "";
             
-            var cpfFormatado = self.retiraMascaraCpf(self.Cpf());
+            var cpfFormatado = self.RetiraMascaraCpf(self.Cpf());
             var cpfEValido = self.CpfEValido(cpfFormatado);
 
             if (!self.Nome() || self.Nome() == undefined)
@@ -185,7 +92,7 @@ app.produtor.viewModel = function () {
 
             return true;
         }
-        self.mascaraCpf = ko.computed(function () {
+        self.MascaraCpf = ko.computed(function () {
             let cpf = "";
             cpf += self.Cpf();
             if (cpf.length == 3 || cpf.length == 7) {
@@ -198,14 +105,90 @@ app.produtor.viewModel = function () {
 
 
         });
-        self.insereMascaraCpf = function (cpf) {
+        self.InsereMascaraCpf = function (cpf) {
             return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
         };
-        self.retiraMascaraCpf = function (cpf) {                               
+        self.RetiraMascaraCpf = function (cpf) {                               
             return cpf.replace('.', '').replace('.', '').replace('-', '');
         };
 
+        /**
+         *  FUNÇÕES QUE CHAMAM AS FUNCOES QUE UTILIZAM A SERVICE
+         */
 
+        self.InserirNovo = function () {
+            if (!self.ProdutorEValido())
+                return;
+
+            var cpfFormatado = self.RetiraMascaraCpf(self.Cpf());
+            var body = {
+                nome: self.Nome(), cpf: cpfFormatado, nomeRua: self.NomeRua(),
+                numero: self.Numero(), municipioId: self.MunicipioId()
+            }
+            self.CadastrarNaAPi(body);
+            self.Reset();
+        }
+        self.Atualizar = function () {
+            if (!self.ProdutorEValido())
+                return;
+
+            var cpfFormatado = self.RetiraMascaraCpf(self.Cpf());
+            var body = {
+                produtorId: self.ProdutorId(), nome: self.Nome(), cpf: cpfFormatado,
+                nomeRua: self.NomeRua(), numero: self.Numero(), municipioId: self.MunicipioId()
+            }
+
+            self.AtualizaNaAPi(body, self.ProdutorId());
+            self.Reset();
+
+        }
+
+        /**
+         *  FUNÇÕES QUE UTILIZA SERVICES
+         */
+
+        self.CadastrarNaAPi = function (body) {
+            services.CadastrarNaAPi(body)
+                .then(resp => {
+                    if (resp) {
+                        self.Produtores([]);
+                        self.BuscarProdutoresNaApi();
+                        alert("Produtor cadastrado com sucesso.");
+                        $('#dialogProdutor').modal('hide');
+                    }
+                })
+        }
+        self.AtualizaNaAPi = function (body, id) {
+            services.AtualizaNaAPi(body, id)
+                .then(resp => {
+                    if (resp) {
+                        self.Produtores([]);
+                        self.BuscarProdutoresNaApi();
+                        alert("Produtor atualizado com sucesso.");
+                        $('#dialogProdutor').modal('hide');
+                    }
+                })
+        }
+
+        self.BuscarProdutoresNaApi = function () {
+            services.BuscarProdutoresNaApi()
+                .then(listProdutores => {
+                    listProdutores.forEach(function (item) {
+                        self.Produtores.push(new model.Produtor(item));
+                    });
+                })
+        };
+        self.BuscarMunicipiosNaApi = function () {
+            services.BuscarMunicipiosNaApi()
+                .then(listMunicipios => {
+                    listMunicipios.forEach(function (item) {
+                        self.Municipios.push(new model.Municipio(item));
+
+                    });
+                })
+        };
+        self.BuscarProdutoresNaApi();
+        self.BuscarMunicipiosNaApi();
 
     });
 
