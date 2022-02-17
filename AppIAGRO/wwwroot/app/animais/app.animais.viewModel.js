@@ -28,23 +28,20 @@ app.propriedade.viewModel = function () {
         self.NomePropriedade = ko.observable();
         self.NomeProdutor = ko.observable();
         self.PropriedadeId = ko.observable();
-       
-
-        self.isEditing = ko.observable(false);
 
         self.HistoricoEntradas = ko.observableArray();
-        self.animaisPorPropriedade = ko.observableArray();
-        self.animaisPorProdutor = ko.observableArray();
-        self.produtores = ko.observableArray();
-        self.propriedades = ko.observableArray();
-        self.propriedadesCopyParaEntradaAnimais = ko.observableArray();
+        self.AnimaisPorPropriedade = ko.observableArray();
+        self.AnimaisPorProdutor = ko.observableArray();
+        self.Produtores = ko.observableArray();
+        self.Propriedades = ko.observableArray();
+        self.PropriedadesCopyParaEntradaAnimais = ko.observableArray();
 
         /**
         *  FUNÇÕES AUXILIAR VM
         */
 
         self.preparaEntradaAnimais = function () {
-            self.propriedadesCopyParaEntradaAnimais(self.propriedades());
+            self.PropriedadesCopyParaEntradaAnimais(self.Propriedades());
         };
 
         self.EntradaEValida = function () {
@@ -73,7 +70,7 @@ app.propriedade.viewModel = function () {
         }
         self.produtorTemRebanho = ko.computed(function () {
             if (self.NomeProdutor() != undefined) {
-                if (self.animaisPorProdutor().length > 0)
+                if (self.AnimaisPorProdutor().length > 0)
                     return true;
                 else
                     return false;
@@ -102,7 +99,7 @@ app.propriedade.viewModel = function () {
             if (nomePropriedade != undefined)
                 self.BuscarAnimaisPorNomePropriedadeNaApi(nomePropriedade);
 
-            self.animaisPorPropriedade.removeAll();
+            self.AnimaisPorPropriedade.removeAll();
             
         });
 
@@ -111,7 +108,7 @@ app.propriedade.viewModel = function () {
             if (nomeProdutor != undefined)
                 self.BuscarAnimaisPorNomeProdutorNaApi(nomeProdutor);
 
-            self.animaisPorProdutor.removeAll();
+            self.AnimaisPorProdutor.removeAll();
 
         });
         
@@ -172,8 +169,8 @@ app.propriedade.viewModel = function () {
             services.BuscarAnimaisPorNomePropriedadeNaApi(nomePropriedade)
                 .then(animais => {
                     if (animais) {
-                        self.animaisPorPropriedade.removeAll();
-                        self.animaisPorPropriedade.push(new model.Animal(animais));
+                        self.AnimaisPorPropriedade.removeAll();
+                        self.AnimaisPorPropriedade.push(new model.Animal(animais));
                     }
                 })
         };
@@ -182,9 +179,9 @@ app.propriedade.viewModel = function () {
             services.BuscarAnimaisPorNomeProdutorNaApi(nomeProdutor)
                 .then(listAnimais => {
                     if (listAnimais) {
-                        self.animaisPorProdutor.removeAll();
+                        self.AnimaisPorProdutor.removeAll();
                         listAnimais.forEach(item => {
-                            self.animaisPorProdutor.push(new model.Animal(item));
+                            self.AnimaisPorProdutor.push(new model.Animal(item));
                         });
                     }
                 })
@@ -207,7 +204,7 @@ app.propriedade.viewModel = function () {
                 .then(listPropriedade => {
                     if (listPropriedade) {
                         listPropriedade.forEach(function (item) {
-                            self.propriedades.push(new modelPropriedade.Propriedade(item));
+                            self.Propriedades.push(new modelPropriedade.Propriedade(item));
                         });
                     }
                 })
@@ -217,7 +214,7 @@ app.propriedade.viewModel = function () {
                 .then(listProdutores => {
                     if (listProdutores) {
                         listProdutores.forEach(function (item) {
-                            self.produtores.push(new modelProdutor.Produtor(item));
+                            self.Produtores.push(new modelProdutor.Produtor(item));
                         });
                     }
                 })

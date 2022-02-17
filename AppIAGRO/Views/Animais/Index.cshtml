@@ -25,7 +25,7 @@
             <div class="form-group col-sm-6">
                 <fieldset class="form-group border p-3">
                     <legend class="w-auto px-2"> Buscar por produtor</legend>
-                    <select class="form-control form-control-sm" data-bind="options: produtores,
+                    <select class="form-control form-control-sm" data-bind="options: Produtores,
                                                                         optionsText: 'Nome',
                                                                         optionsValue: 'Nome',
                                                                         optionsCaption: 'Selecione um produtor...',
@@ -46,7 +46,7 @@
                                 <th scope="col" class="text-center">Sem Vacina</th>
                             </tr>
                         </thead>
-                        <tbody data-bind="foreach: animaisPorProdutor">
+                        <tbody data-bind="foreach: AnimaisPorProdutor">
                             <tr>
                                 <td data-bind="text: NomePropriedade"></td>
                                 <td data-bind="text: SaldoComVacinaBovino"></td>
@@ -72,7 +72,7 @@
             <div class="form-group col-sm-6">
                 <fieldset class="form-group border p-3">
                     <legend class="w-auto px-2"> Buscar por propriedade</legend>
-                    <select class="form-control form-control-sm" data-bind="options: propriedades,
+                    <select class="form-control form-control-sm" data-bind="options: Propriedades,
                                                                         optionsText: 'NomePropriedade',
                                                                         optionsValue: 'NomePropriedade',
                                                                         optionsCaption: 'Selecione um propriedade...',
@@ -93,7 +93,7 @@
                                 <th scope="col" class="text-center">Sem Vacina</th>
                             </tr>
                         </thead>
-                        <tbody data-bind="foreach: animaisPorPropriedade">
+                        <tbody data-bind="foreach: AnimaisPorPropriedade">
                             <tr>
                                 <td data-bind="text: NomeProdutor"></td>
                                 <td data-bind="text: SaldoComVacinaBovino"></td>
@@ -128,7 +128,7 @@
                         <div class="form-group row">
                             <div class="form-group col-sm-6">
                                 <label for="cpf" class="col-form-label">Propriedade</label>
-                                <select class="form-control " data-bind="options: propriedadesCopyParaEntradaAnimais,
+                                <select class="form-control " data-bind="options: PropriedadesCopyParaEntradaAnimais,
                                                                         optionsText: 'NomePropriedade',
                                                                         optionsValue: 'PropriedadeId',
                                                                         optionsCaption: 'Selecione uma propriedade...',
@@ -168,7 +168,7 @@
                         <div class="form-group row">
                             <div class="form-group col-sm-6">
                                 <label for="cpf" class="col-form-label">Propriedade</label>
-                                <select class="form-control " data-bind="options: propriedadesCopyParaEntradaAnimais,
+                                <select class="form-control " data-bind="options: PropriedadesCopyParaEntradaAnimais,
                                                                         optionsText: 'NomePropriedade',
                                                                         optionsValue: 'PropriedadeId',
                                                                         optionsCaption: 'Selecione uma propriedade...',

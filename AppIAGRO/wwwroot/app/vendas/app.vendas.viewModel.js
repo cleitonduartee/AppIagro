@@ -23,31 +23,34 @@ app.vendas.viewModel = function () {
         var self = this;
 
 
-        self.nomePropriedadeOrigem = ko.observable();
-        self.propriedadeIdDestino = ko.observable();
-        self.propriedadeIdCancelarVendas = ko.observable();
-        self.produtorIdBuscaComprasEVendas = ko.observable();
-        self.tituloDialogCompraVendas = ko.observable();
-        self.produtores = ko.observableArray();
-        self.historicosComprasEVendas = ko.observableArray();
-        self.historicosVendasParaCancelar = ko.observableArray();
-        self.animaisPropriedadeOrigem = ko.observableArray();
-        self.propriedadesOrigem = ko.observableArray();
-        self.propriedadesDestino = ko.observableArray();
-        self.propriedadesBuscaComprasEVendas = ko.observableArray();
-        self.vendasPorPropriedade = ko.observableArray();
-        self.qtdBovinoVenda = ko.observable();
-        self.qtdBubalinoVenda = ko.observable();
-        self.finalidade = ko.observable();
+        self.NomePropriedadeOrigem = ko.observable();
+        self.PropriedadeIdDestino = ko.observable();
+        self.PropriedadeIdCancelarVendas = ko.observable();
+        self.ProdutorIdBuscaComprasEVendas = ko.observable();
+        self.TituloDialogCompraVendas = ko.observable();
+        self.QtdBovinoVenda = ko.observable();
+        self.QtdBubalinoVenda = ko.observable();
+        self.Finalidade = ko.observable();
+
         self.eBuscaDeCompras = ko.observable(false);
 
+        self.Produtores = ko.observableArray();
+        self.HistoricosComprasEVendas = ko.observableArray();
+        self.HistoricosVendasParaCancelar = ko.observableArray();
+        self.AnimaisPropriedadeOrigem = ko.observableArray();
+        self.PropriedadesOrigem = ko.observableArray();
+        self.PropriedadesDestino = ko.observableArray();
+        self.PropriedadesBuscaComprasEVendas = ko.observableArray();
+        self.VendasPorPropriedade = ko.observableArray();
+       
 
 
 
-        self.existeSaldoParaVenda = ko.computed(function () {
-            if (self.animaisPropriedadeOrigem().length > 0) {
-                let qtdBovino = self.animaisPropriedadeOrigem()[0].SaldoComVacinaBovino();
-                let qtdBubalino = self.animaisPropriedadeOrigem()[0].SaldoComVacinaBubalino();
+
+        self.ExisteSaldoParaVenda = ko.computed(function () {
+            if (self.AnimaisPropriedadeOrigem().length > 0) {
+                let qtdBovino = self.AnimaisPropriedadeOrigem()[0].SaldoComVacinaBovino();
+                let qtdBubalino = self.AnimaisPropriedadeOrigem()[0].SaldoComVacinaBubalino();
 
                 if (qtdBovino > 0 || qtdBubalino > 0)
                     return true;
@@ -58,15 +61,15 @@ app.vendas.viewModel = function () {
                 return false;
             
         });
-        self.existeMovimentacoes = ko.computed(function () {
-            if (self.historicosComprasEVendas().length > 0) 
+        self.ExisteMovimentacoes = ko.computed(function () {
+            if (self.HistoricosComprasEVendas().length > 0) 
                 return true;            
             else 
                 return false;
         });
-        self.existeMovimentacoesDeVendas = ko.computed(function () {
-            if (self.propriedadeIdCancelarVendas() != undefined) {
-                if (self.historicosVendasParaCancelar().length > 0)
+        self.ExisteMovimentacoesDeVendas = ko.computed(function () {
+            if (self.PropriedadeIdCancelarVendas() != undefined) {
+                if (self.HistoricosVendasParaCancelar().length > 0)
                     return true;
                 else
                     return false;
@@ -78,9 +81,9 @@ app.vendas.viewModel = function () {
 
 
 
-        self.msgQuandoNaoExisteMovimentacao = ko.computed(function () {
+        self.MsgQuandoNaoExisteMovimentacao = ko.computed(function () {
 
-            if (self.produtorIdBuscaComprasEVendas() != undefined) {
+            if (self.ProdutorIdBuscaComprasEVendas() != undefined) {
                 if (self.eBuscaDeCompras())
                     return 'Não existe compras para esse produtor.';
                 else
@@ -91,42 +94,42 @@ app.vendas.viewModel = function () {
 
         });
 
-        self.reset = function () {
+        self.Reset = function () {
 
-            self.animaisPropriedadeOrigem.removeAll();
-            self.nomePropriedadeOrigem(undefined);
-            self.propriedadeIdDestino(undefined);
-            self.qtdBovinoVenda(undefined);
-            self.qtdBubalinoVenda(undefined);
-            self.finalidade(undefined);
-            self.produtorIdBuscaComprasEVendas(undefined);
-            self.historicosComprasEVendas.removeAll();
-            self.propriedadeIdCancelarVendas(undefined);
+            self.AnimaisPropriedadeOrigem.removeAll();
+            self.NomePropriedadeOrigem(undefined);
+            self.PropriedadeIdDestino(undefined);
+            self.QtdBovinoVenda(undefined);
+            self.QtdBubalinoVenda(undefined);
+            self.Finalidade(undefined);
+            self.ProdutorIdBuscaComprasEVendas(undefined);
+            self.HistoricosComprasEVendas.removeAll();
+            self.PropriedadeIdCancelarVendas(undefined);
 
         }
 
 
 
 
-        self.nomePropriedadeOrigem.subscribe(function (nomePropriedade) {
+        self.NomePropriedadeOrigem.subscribe(function (nomePropriedade) {
             if (nomePropriedade != undefined) {
                 services.BuscarAnimaisPorNomePropriedadeNaApi(nomePropriedade)
                     .then(Animais => {
-                        self.animaisPropriedadeOrigem.removeAll();
-                        self.animaisPropriedadeOrigem.push(new modelAnimal.animal(Animais));
+                        self.AnimaisPropriedadeOrigem.removeAll();
+                        self.AnimaisPropriedadeOrigem.push(new modelAnimal.Animal(Animais));
                     })
             } else {
-                self.reset();
+                self.Reset();
             }
         });
-        self.produtorIdBuscaComprasEVendas.subscribe(function (produtorId) {
+        self.ProdutorIdBuscaComprasEVendas.subscribe(function (produtorId) {
             if (produtorId != undefined) {
                 if (self.eBuscaDeCompras()) {
                     services.BuscarComprasPorIdProdutorNaApi(produtorId)
                         .then(listHistoricos => {
-                            self.historicosComprasEVendas.removeAll();
+                            self.HistoricosComprasEVendas.removeAll();
                             listHistoricos.forEach(function (item) {
-                                self.historicosComprasEVendas.push(new model.historico(item));
+                                self.HistoricosComprasEVendas.push(new model.Historico(item));
                             });
 
                         });
@@ -134,104 +137,104 @@ app.vendas.viewModel = function () {
                 else {
                     services.BuscarVendasPorIdProdutorNaApi(produtorId)
                         .then(listHistoricos => {
-                            self.historicosComprasEVendas.removeAll();
+                            self.HistoricosComprasEVendas.removeAll();
                             listHistoricos.forEach(function (item) {
-                                self.historicosComprasEVendas.push(new model.historico(item));
+                                self.HistoricosComprasEVendas.push(new model.Historico(item));
                             });
 
                         });
                 }
             }
             else
-                self.reset();
+                self.Reset();
         });
-        self.propriedadeIdCancelarVendas.subscribe(function (propriedadeId) {
+        self.PropriedadeIdCancelarVendas.subscribe(function (propriedadeId) {
             if (propriedadeId != undefined) {
                 services.BuscarVendasPorIdPropriedadeNaApi(propriedadeId)
                     .then(listHistoricos => {                        
-                        self.historicosVendasParaCancelar.removeAll();
+                        self.HistoricosVendasParaCancelar.removeAll();
                         listHistoricos.forEach(function (item) {
-                            self.historicosVendasParaCancelar.push(new model.historico(item));
+                            self.HistoricosVendasParaCancelar.push(new model.Historico(item));
                         });
 
                     });
             }
             else
-                self.reset();
+                self.Reset();
         });
 
-        self.realizarVenda = function (event) {
-            if (!self.vendaEValida())
+        self.RealizarVenda = function (event) {
+            if (!self.VendaEValida())
                 return
             
-            let body = self.montaBody();
+            let body = self.MontaBody();
             console.log(body);
 
             services.RealizarVendaNaApi(body)
                 .then(resp => {
                     if (resp) {
                         alert("Venda realizada com sucesso.");
-                        self.reset();
+                        self.Reset();
                     }
                 });
         }
-        self.montaBody = function () {
-            var qtdBovinoVenda = self.qtdBovinoVenda();
-            var qtdBubalinoVenda = self.qtdBubalinoVenda();
-            var propriedadeOrigem = self.getPropriedade(self.nomePropriedadeOrigem());
+        self.MontaBody = function () {
+            var qtdBovinoVenda = self.QtdBovinoVenda();
+            var qtdBubalinoVenda = self.QtdBubalinoVenda();
+            var propriedadeOrigem = self.GetPropriedade(self.NomePropriedadeOrigem());
 
             let body = {
                 propriedadeOrigemId: propriedadeOrigem.PropriedadeId(),
-                propriedadeDestinoId: self.propriedadeIdDestino(),
+                propriedadeDestinoId: self.PropriedadeIdDestino(),
                 saldoComVacinaBovino: qtdBovinoVenda == undefined ? 0 : qtdBovinoVenda,
                 saldoComVacinaBubalino: qtdBubalinoVenda == undefined ? 0 : qtdBubalinoVenda,
-                finalidade: parseInt(self.finalidade())
+                finalidade: parseInt(self.Finalidade())
             }
             return body;
         }
 
-        self.realizarCancelamentoDeVenda = function (event) {
-            services.CancelarVenda(event.codigoHistorico())
+        self.RealizarCancelamentoDeVenda = function (event) {
+            services.CancelarVenda(event.CodigoHistorico())
                 .then(resp => {
-                    self.historicosVendasParaCancelar.removeAll();
+                    self.HistoricosVendasParaCancelar.removeAll();
                     if (resp) {
                         alert("Venda cancelado com sucesso.");
                         $('#dialogCancelarVendas').modal('hide');
                     }
-                    self.reset();
+                    self.Reset();
                 });
         }
 
-        self.preparaBuscaCompras = function () {
+        self.PreparaBuscaCompras = function () {
             self.eBuscaDeCompras(true);
-            self.tituloDialogCompraVendas('Buscar compras');
+            self.TituloDialogCompraVendas('Buscar compras');
         }
-        self.preparaBuscaVendas = function () {
+        self.PreparaBuscaVendas = function () {
             self.eBuscaDeCompras(false);
-            self.tituloDialogCompraVendas('Buscar vendas');
+            self.TituloDialogCompraVendas('Buscar vendas');
         }
 
-        self.vendaEValida = function(){
+        self.VendaEValida = function(){
             var validacao = "";
-            var propriedadeOrigem = self.getPropriedade(self.nomePropriedadeOrigem());
-            var qtdBovinoVacinado = self.animaisPropriedadeOrigem()[0].SaldoComVacinaBovino();
-            var qtdBubalinoVacinado = self.animaisPropriedadeOrigem()[0].SaldoComVacinaBubalino();
+            var propriedadeOrigem = self.GetPropriedade(self.NomePropriedadeOrigem());
+            var qtdBovinoVacinado = self.AnimaisPropriedadeOrigem()[0].SaldoComVacinaBovino();
+            var qtdBubalinoVacinado = self.AnimaisPropriedadeOrigem()[0].SaldoComVacinaBubalino();
             
            
 
-            if (propriedadeOrigem.PropriedadeId() === self.propriedadeIdDestino())
+            if (propriedadeOrigem.PropriedadeId() === self.PropriedadeIdDestino())
                 validacao += "* Não é permitido venda para mesma propriedade. \n"
-            if (self.propriedadeIdDestino() == undefined)
+            if (self.PropriedadeIdDestino() == undefined)
                 validacao += "* Propriedade de destino é obigatório. \n"            
-            if (self.qtdBovinoVenda() > qtdBovinoVacinado)
+            if (self.QtdBovinoVenda() > qtdBovinoVacinado)
                 validacao += "* Quantidade de bovino informado é maior que o saldo disponível.  \n"
-            if (self.qtdBubalinoVenda() > qtdBubalinoVacinado)
+            if (self.QtdBubalinoVenda() > qtdBubalinoVacinado)
                 validacao += "* Quantidade de bubalino informado é maior que o saldo disponível.  \n"
-            if (self.qtdBovinoVenda() == undefined && self.qtdBubalinoVenda() == undefined)
+            if (self.QtdBovinoVenda() == undefined && self.QtdBubalinoVenda() == undefined)
                 validacao += "* Quantidade de animais é obrigatório. \n"
-            if (self.qtdBovinoVenda() == 0 && self.qtdBubalinoVenda() == 0)
+            if (self.QtdBovinoVenda() == 0 && self.QtdBubalinoVenda() == 0)
                 validacao += "* Quantidade de animais deve ser maior que zero. \n"
-            if (self.finalidade() == undefined)
+            if (self.Finalidade() == undefined)
                 validacao += "* Finalidade  é obigatório. \n"
 
 
@@ -241,8 +244,8 @@ app.vendas.viewModel = function () {
             }
             return true;
         }
-        self.getPropriedade = function (nomePropriedade) {
-            return ko.utils.arrayFirst(self.propriedadesOrigem(), function (item) {               
+        self.GetPropriedade = function (nomePropriedade) {
+            return ko.utils.arrayFirst(self.PropriedadesOrigem(), function (item) {               
                 return item.NomePropriedade() === nomePropriedade;
             })|| 'not found';
         }
@@ -251,9 +254,9 @@ app.vendas.viewModel = function () {
             services.BuscarPropriedadesNaApi()
                 .then(listPropriedade => {
                     listPropriedade.forEach(function (item) {
-                        self.propriedadesOrigem.push(new modelPropriedade.propriedade(item));
-                        self.propriedadesDestino.push(new modelPropriedade.propriedade(item));
-                        self.propriedadesBuscaComprasEVendas.push(new modelPropriedade.propriedade(item));
+                        self.PropriedadesOrigem.push(new modelPropriedade.Propriedade(item));
+                        self.PropriedadesDestino.push(new modelPropriedade.Propriedade(item));
+                        self.PropriedadesBuscaComprasEVendas.push(new modelPropriedade.Propriedade(item));
                     }
                     );
                 })
@@ -262,7 +265,7 @@ app.vendas.viewModel = function () {
             services.BuscarProdutoresNaApi()
                 .then(listProdutores => {
                     listProdutores.forEach(function (item) {
-                        self.produtores.push(new modelProdutores.produtor(item));
+                        self.Produtores.push(new modelProdutores.Produtor(item));
                     }
                     );
                 })
