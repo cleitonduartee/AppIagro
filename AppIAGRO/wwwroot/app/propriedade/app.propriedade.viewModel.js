@@ -1,100 +1,20 @@
 ﻿var app = app || {};
 app.propriedade = app.propriedade || {};
 app.propriedade.model = app.propriedade.model || {};
+app.propriedade.services = app.propriedade.services || {};
 
 app.produtor = app.produtor || {};
 app.produtor.model = app.produtor.model || {};
 
 app.propriedade.viewModel = function () {
-
-    const header = new Headers({
-        "Content-Type": "application/json",
-        "X-Custom-Header": "ProcessThisImmediately",
-    });
+       
     var model = app.propriedade.model;
     var modelProdutor = app.produtor.model;
+    var services = app.propriedade.services;
 
     ko.applyBindings(new function () {
         var self = this;
 
-        self.BuscarPropriedadesNaApi = function () {
-            fetch('http://localhost:62978/api/v1/Propriedade/BuscarTodos')
-                .then(p => p.json())
-                .then(listPropriedade => {
-                    listPropriedade.forEach(function (item) {
-                        self.propriedades.push(new model.propriedade(item));
-
-                    });
-                })
-        };
-        self.BuscarProdutoresNaApi = function () {
-            fetch('http://localhost:62978/api/v1/Produtor/BuscarTodos')
-                .then(p => p.json())
-                .then(listProdutores => {
-                    listProdutores.forEach(function (item) {
-                        self.produtores.push(new modelProdutor.produtor(item));
-                    });
-                })
-        };
-        self.BuscarMunicipiosNaApi = function () {
-            fetch('http://localhost:62978/api/v1/Municipio/BuscarTodos')
-                .then(m => m.json())
-                .then(listMunicipios => {
-                    listMunicipios.forEach(function (item) {
-                        self.municipios.push(new modelProdutor.municipio(item));
-
-                    });
-                })
-        };
-        self.BuscarPropriedadesNaApi();        
-
-        self.AtualizaNaAPi = function (body, id) {            
-            const url = ` http://localhost:62978/api/v1/Propriedade/EditarPropriedade/${id} `;
-            const options = {
-                method: 'PUT',
-                mode: 'cors',
-                headers: header,
-                body: JSON.stringify(body)
-            }           
-            return fetch(url, options)            
-                .then(resp => {
-                    if (resp.ok) {
-                        console.log(resp.body)
-                        self.propriedades([]);
-                        self.BuscarPropriedadesNaApi();
-                        alert("Propriedade atualizado com sucesso.");
-                        $('#dialogPropriedade').modal('hide');
-                    } else {
-                        alert('Erro ao atualizar propriedade. Tente novamente.');
-                    } 
-                })
-                .catch(e => {                   
-                    alert(e);
-                })
-        }
-        self.CadastrarNaAPi = function (body) {
-            const url = "http://localhost:62978/api/v1/Propriedade/CadastrarPropriedade";
-            const options = {
-                method: 'POST',
-                mode: 'cors',
-                headers: header,
-                body: JSON.stringify(body)
-            }
-            return fetch(url, options)
-                .then(resp => {
-                    if (resp.ok) {
-                        self.propriedades([]);
-                        self.BuscarPropriedadesNaApi();
-                        alert("Propriedade cadastrado com sucesso.");
-                        $('#dialogPropriedade').modal('hide');
-                    } else {
-                        alert('Erro ao cadastrar propriedade. Tente novamente.');
-                    }
-                })
-                .catch(e => {
-                    alert(e);
-                })
-        }
 
         self.PropriedadeId = ko.observable();
         self.InscricaoEstadual = ko.observable();
@@ -102,35 +22,30 @@ app.propriedade.viewModel = function () {
         self.ProdutorId = ko.observable();
         self.MunicipioId = ko.observable();
 
-        self.isEditing = ko.observable(false);
-        
+        self.IsEditing = ko.observable(false);        
        
-        self.produtores = ko.observableArray();
-        self.propriedades = ko.observableArray();
-        self.municipios = ko.observableArray([]);
+        self.Produtores = ko.observableArray();
+        self.Propriedades = ko.observableArray();
+        self.Municipios = ko.observableArray([]);
+
+
+        /**
+        *  FUNÇÕES AUXILIAR VM
+        */
+
+        self.preparaNovoCadastro = function () {
+            self.IsEditing(false);
+            self.Reset();
+        }
 
         self.preparaEdicao = function (propriedade) {  
 
-            self.isEditing(true);        
+            self.IsEditing(true);
             self.PropriedadeId(propriedade.PropriedadeId());
             self.InscricaoEstadual(propriedade.InscricaoEstadual());
             self.NomePropriedade(propriedade.NomePropriedade());
             self.ProdutorId(propriedade.Produtor().produtorId);
-           // self.MunicipioId(propriedade.MunicipioId());
         }
-        self.atualizar = function () {
-            
-            if (!self.PropriedadeEValido())
-                return;
-
-            self.AtualizaNaAPi({
-                propriedadeId: self.PropriedadeId(), nomePropriedade: self.NomePropriedade(),
-                produtorId: self.ProdutorId(), municipioId: self.MunicipioId()
-            },
-                self.PropriedadeId());
-                
-        }
-
         self.Reset = function () {            
             self.PropriedadeId('');
             self.InscricaoEstadual('');
@@ -139,20 +54,7 @@ app.propriedade.viewModel = function () {
             self.MunicipioId('');           
         }
         
-        self.preparaNovoCadastro = function () {
-            self.isEditing(false);
-            self.Reset();
-        }
-        self.inserirNovo = function () {
-
-            if (!self.PropriedadeEValido())
-                return;
-            
-            self.CadastrarNaAPi({
-                nomePropriedade: self.NomePropriedade(),
-                produtorId: self.ProdutorId(), municipioId: self.MunicipioId()
-            });
-        }
+        
         self.PropriedadeEValido = function () {
             var validacao = "";
 
@@ -180,6 +82,91 @@ app.propriedade.viewModel = function () {
 
             return true;
         }
+
+        /**
+         *  FUNÇÕES QUE CHAMAM AS FUNCOES QUE UTILIZAM A SERVICE
+         */
+
+        self.inserirNovo = function () {
+
+            if (!self.PropriedadeEValido())
+                return;
+
+            self.CadastrarNaAPi({
+                nomePropriedade: self.NomePropriedade(),
+                produtorId: self.ProdutorId(), municipioId: self.MunicipioId()
+            });
+        }
+
+        self.atualizar = function () {
+
+            if (!self.PropriedadeEValido())
+                return;
+
+            self.AtualizaNaAPi({
+                propriedadeId: self.PropriedadeId(), nomePropriedade: self.NomePropriedade(),
+                produtorId: self.ProdutorId(), municipioId: self.MunicipioId()
+            },
+                self.PropriedadeId());
+
+        }
+
+        /**
+         *  FUNÇÕES QUE UTILIZA SERVICES
+         */
+
+
+        self.CadastrarNaAPi = function (body) {
+            services.CadastrarNaAPi(body)
+                .then(resp => {
+                    if (resp) {
+                        self.Propriedades([]);
+                        self.BuscarPropriedadesNaApi();
+                        alert("Propriedade cadastrado com sucesso.");
+                        $('#dialogPropriedade').modal('hide');
+                    }
+                })
+        }
+        self.AtualizaNaAPi = function (body, id) {
+            services.AtualizaNaAPi(body, id)
+                .then(resp => {
+                    if (resp) {
+                        self.Propriedades([]);
+                        self.BuscarPropriedadesNaApi();
+                        alert("Propriedade atualizado com sucesso.");
+                        $('#dialogPropriedade').modal('hide');
+                    }
+                })
+        }
+
+        self.BuscarPropriedadesNaApi = function () {
+            services.BuscarPropriedadesNaApi()
+                .then(listPropriedade => {
+                    listPropriedade.forEach(function (item) {
+                        self.Propriedades.push(new model.propriedade(item));
+
+                    });
+                })
+
+        };
+        self.BuscarProdutoresNaApi = function () {
+            services.BuscarProdutoresNaApi()
+                .then(listProdutores => {
+                    listProdutores.forEach(function (item) {
+                        self.Produtores.push(new modelProdutor.Produtor(item));
+                    });
+                })
+        };
+        self.BuscarMunicipiosNaApi = function () {
+            services.BuscarMunicipiosNaApi()
+                .then(listMunicipios => {
+                    listMunicipios.forEach(function (item) {
+                        self.Municipios.push(new modelProdutor.Municipio(item));
+
+                    });
+                })
+        };
+        self.BuscarPropriedadesNaApi();
         self.BuscarMunicipiosNaApi();
         self.BuscarProdutoresNaApi();
        
