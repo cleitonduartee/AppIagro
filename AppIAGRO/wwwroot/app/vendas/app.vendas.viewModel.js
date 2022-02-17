@@ -148,7 +148,7 @@ app.vendas.viewModel = function () {
         self.propriedadeIdCancelarVendas.subscribe(function (propriedadeId) {
             if (propriedadeId != undefined) {
                 services.BuscarVendasPorIdPropriedadeNaApi(propriedadeId)
-                    .then(listHistoricos => {
+                    .then(listHistoricos => {                        
                         self.historicosVendasParaCancelar.removeAll();
                         listHistoricos.forEach(function (item) {
                             self.historicosVendasParaCancelar.push(new model.historico(item));

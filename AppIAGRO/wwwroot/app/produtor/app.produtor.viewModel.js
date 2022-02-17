@@ -35,15 +35,15 @@ app.produtor.viewModel = function () {
         self.BuscarProdutoresNaApi();
         self.BuscarMunicipiosNaApi();
 
-        self.AtualizaNaAPi = function (body, id) {            
-            const url = ` http://localhost:62978/api/v1/Produtor/EditarProdutor/${id} `;            
+        self.AtualizaNaAPi = function (body, id) {
+            const url = ` http://localhost:62978/api/v1/Produtor/EditarProdutor/${id} `;
             const options = {
                 method: 'PUT',
                 mode: 'cors',
                 headers: header,
                 body: JSON.stringify(body)
-            }           
-            return fetch(url, options)            
+            }
+            return fetch(url, options)
                 .then(resp => {
                     if (resp.ok) {
                         console.log(resp.body)
@@ -53,9 +53,9 @@ app.produtor.viewModel = function () {
                         $('#dialogProdutor').modal('hide');
                     } else {
                         alert('Erro ao atualizar produtor. Tente novamente.');
-                    } 
+                    }
                 })
-                .catch(e => {                   
+                .catch(e => {
                     alert(e);
                 })
         }
@@ -91,8 +91,8 @@ app.produtor.viewModel = function () {
         self.MunicipioId = ko.observable();
 
         self.isEditing = ko.observable(false);
-        
-       
+
+
         self.produtores = ko.observableArray();
         self.produtor = ko.observable();
         self.municipios = ko.observableArray([]);
@@ -100,37 +100,39 @@ app.produtor.viewModel = function () {
         self.preparaEdicao = function (produtor) {
 
             self.isEditing(true);
-            self.produtor(new model.edicaoProdutor(produtor));           
+            self.produtor(new model.edicaoProdutor(produtor));
             self.ProdutorId(produtor.ProdutorId());
             self.Nome(produtor.Nome());
-            self.Cpf(produtor.Cpf());
+            self.Cpf(self.insereMascaraCpf(produtor.Cpf()));
             self.NomeRua(produtor.NomeRua());
             self.Numero(produtor.Numero());
             self.MunicipioId(produtor.Municipio());
-            
+
         }
         self.atualizar = function () {
             //console.log("Validacao: ", self.Validacao());
             if (!self.ProdutorEValido())
                 return;
 
+            var cpfFormatado = self.retiraMascaraCpf(self.Cpf());
+
             self.AtualizaNaAPi({
-                produtorId: self.ProdutorId(), nome: self.Nome(), cpf: self.Cpf(),
+                produtorId: self.ProdutorId(), nome: self.Nome(), cpf: cpfFormatado,
                 nomeRua: self.NomeRua(), numero: self.Numero(), municipioId: self.MunicipioId()
             }, self.ProdutorId());
-                
+
         }
 
-        self.Reset = function () {            
+        self.Reset = function () {
             self.ProdutorId('');
             self.Nome('');
             self.Cpf('');
             self.NomeRua('');
             self.Numero('');
             self.MunicipioId('');
-           
+
         }
-        
+
         self.preparaNovoCadastro = function () {
             self.isEditing(false);
             self.Reset();
@@ -139,21 +141,26 @@ app.produtor.viewModel = function () {
 
             if (!self.ProdutorEValido())
                 return;
-            
+
+            var cpfFormatado = self.retiraMascaraCpf(self.Cpf());
+
             self.CadastrarNaAPi({
-                nome: self.Nome(), cpf: self.Cpf(), nomeRua: self.NomeRua(),
+                nome: self.Nome(), cpf: cpfFormatado, nomeRua: self.NomeRua(),
                 numero: self.Numero(), municipioId: self.MunicipioId()
             });
         }
-        self.ProdutorEValido = function () {           
+        self.ProdutorEValido = function () {
             var validacao = "";
-
-            var cpfEValido = self.CpfEValido(self.retiraMascaraCpf(self.Cpf()));
+            
+            var cpfFormatado = self.retiraMascaraCpf(self.Cpf());
+            var cpfEValido = self.CpfEValido(cpfFormatado);
 
             if (!self.Nome() || self.Nome() == undefined)
                 validacao += "* Nome é preenchimento obrigatório. \n"
-            if (!self.Cpf() || self.Cpf() == undefined || !cpfEValido)               
+            if (self.Cpf() == undefined || self.Cpf() == '' )
                 validacao += "* CPF é obrigatório e deve conter 11 digitos numericos. \n"
+            else if(!cpfEValido)
+                validacao += "* CPF invalido. \n"
             if (!self.NomeRua() || self.NomeRua() == undefined)
                 validacao += "* Nome é preenchimento obrigatório. \n"
             if (!self.Numero() || self.Numero() == undefined)
@@ -166,11 +173,11 @@ app.produtor.viewModel = function () {
                 return false;
             }
             return true;
-                
+
         }
         self.CpfEValido = function (cpf) {
             let eNumero = !isNaN(cpf);
-            
+
             if (!eNumero)
                 return false;
             if (cpf.length != 11)
@@ -188,14 +195,17 @@ app.produtor.viewModel = function () {
                 cpf += "-";
                 self.Cpf(cpf);
             }
-            
+
 
         });
-        self.retiraMascaraCpf = function (cpf) {
-            return cpf.replace(".", "").replace(".", "").replace("-", "");
+        self.insereMascaraCpf = function (cpf) {
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+        };
+        self.retiraMascaraCpf = function (cpf) {                               
+            return cpf.replace('.', '').replace('.', '').replace('-', '');
         };
 
-       
+
 
     });
 

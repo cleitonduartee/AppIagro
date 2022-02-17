@@ -140,9 +140,6 @@ app.propriedade.viewModel = function () {
         }
         
         self.preparaNovoCadastro = function () {
-            self.BuscarMunicipiosNaApi();
-            self.BuscarProdutoresNaApi();
-
             self.isEditing(false);
             self.Reset();
         }

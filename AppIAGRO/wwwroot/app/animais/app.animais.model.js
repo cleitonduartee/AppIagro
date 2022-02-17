@@ -5,7 +5,7 @@ app.animais.model = function () {
 
     var animal = function (animal) {
         var self = this;
-                
+
         self.PropriedadeId = ko.observable(animal.propriedadeId);
         self.NomePropriedade = ko.observable(animal.nomePropriedade);
         self.NomeProdutor = ko.observable(animal.nomeProdutor);

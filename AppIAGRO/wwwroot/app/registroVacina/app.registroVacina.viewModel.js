@@ -24,7 +24,6 @@ app.registroVacina.viewModel = function () {
         var self = this;
 
         self.BuscarAnimaisPorNomePropriedadeNaApi = function (nomePropriedade) {
-            console.log(nomePropriedade);
             const url = `http://localhost:62978/api/v1/Animais/BuscarPorPropriedade/${nomePropriedade}`;
             fetch(url)
                 .then(p => p.json())
@@ -133,24 +132,24 @@ app.registroVacina.viewModel = function () {
             var qtdBovinoSemVacina;
             var qtdBubalinoSemVacina;
             var dataAtual = new Date();
-            var dataVacinacao = new Date(self.DataVacinacao());
+            var dataVacinacao = new Date(self.DataVacinacao() +"T04:00:00Z");
 
             if (self.NomePropriedade() == undefined)
                 validacao += "* Propriedade é obrigatória. \n"
             if (self.QtdBovinoVacinado() == undefined && self.QtdBubalinoVacinado() == undefined)
                 validacao += "* Informe a quantidade de animais Bovino ou/e Bubalino \n"
-            if (self.QtdBovinoVacinado() <= 0 && self.QtdBubalinoVacinado() <= 0)
-                validacao += "* Quantidade de animais deve ser maior que zero.  \n"
+            if (self.QtdBovinoVacinado() <= 0 )
+                validacao += "* Quantidade bovino deve ser maior que zero.  \n"
+            if (self.QtdBubalinoVacinado() <= 0 )
+                validacao += "* Quantidade bubalino deve ser maior que zero.  \n"
             if (self.DataVacinacao() == undefined)
                 validacao += "* Data da vacinação é obrigatório.  \n"
-            if (self.TipoVacina() == undefined)
-                validacao += "* Tipo da vacina aplicada é obrigatório.  \n"
-
-
-            if (dataVacinacao > dataAtual)
-                validacao += "* Data de vacinação nao pode ser maior que a data atual.  \n"               
-            else if (dataVacinacao.getFullYear() != dataAtual.getFullYear())
+            if (dataVacinacao > dataAtual && self.DataVacinacao() != undefined)
+                validacao += "* Data de vacinação nao pode ser maior que a data atual.  \n"
+            else if (dataVacinacao.getFullYear() != dataAtual.getFullYear() && self.DataVacinacao() != undefined)
                 validacao += "* Ano de vacinacao deve ser do ano atual.  \n"
+                
+            
 
             if (self.NomePropriedade() != undefined) {
                 qtdBovinoSemVacina = self.animaisPorPropriedade()[0].SaldoSemVacinaBovino();
@@ -161,6 +160,9 @@ app.registroVacina.viewModel = function () {
                 validacao += "* Quantidade de bovino vacinado é maior que o saldo sem vacina.  \n"
             if (self.QtdBubalinoVacinado() > qtdBubalinoSemVacina)
                 validacao += "* Quantidade de bubalino vacinado é maior que o saldo sem vacina.  \n"
+
+            if (self.TipoVacina() == undefined)
+                validacao += "* Tipo da vacina aplicada é obrigatório.  \n"
 
             if (validacao) {
                 alert(validacao);
