@@ -55,15 +55,18 @@ app.registroVacina.viewModel = function () {
             var qtdBubalinoSemVacina;
             var dataAtual = new Date();
             var dataVacinacao = new Date(self.DataVacinacao() + "T04:00:00Z");
+                        
 
             if (self.NomePropriedade() == undefined)
                 validacao += "* Propriedade é obrigatória. \n"
             if (self.QtdBovinoVacinado() == undefined && self.QtdBubalinoVacinado() == undefined)
                 validacao += "* Informe a quantidade de animais Bovino ou/e Bubalino \n"
-            if (self.QtdBovinoVacinado() <= 0)
-                validacao += "* Quantidade bovino deve ser maior que zero.  \n"
-            if (self.QtdBubalinoVacinado() <= 0)
-                validacao += "* Quantidade bubalino deve ser maior que zero.  \n"
+            if (self.QtdBovinoVacinado() < 0)
+                validacao += "* Quantidade bovino não pode ser negativa.  \n"
+            if (self.QtdBubalinoVacinado() < 0)
+                validacao += "* Quantidade bubalino não pode ser negativa.  \n"
+            if (self.QtdBovinoVacinado()== 0 && self.QtdBubalinoVacinado() == 0 )
+                validacao += "* Quantidade de animais deve ser maior que zero.  \n"
             if (self.DataVacinacao() == undefined)
                 validacao += "* Data da vacinação é obrigatório.  \n"
             if (dataVacinacao > dataAtual && self.DataVacinacao() != undefined)
